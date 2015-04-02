@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+org.jboss.ide.eclipse.as.classpath.ui.containers.custom.CustomClasspathPreferencePage.LAST_RUNTIME_SELECTED=org.jboss.ide.eclipse.as.runtime.stripped
+org.jboss.ide.eclipse.as.ui.defaultWebServer=JBoss Enterprise Application Platform 6.1+1427561685800
+org.jboss.ide.eclipse.as.ui.preferences.disabled.automatic.server.view=true
+org.jboss.ide.eclipse.as.ui.preferences.enabledDecorators.1=true
+org.jboss.ide.eclipse.as.ui.preferences.runtime.last.type.org.jboss.ide.eclipse.as.runtime.eap.61=C\:\\Program Files\\JBoss_IDE\\runtimes\\jboss-eap
+org.jboss.ide.eclipse.as.ui.preferences.runtime.last.type.org.jboss.ide.eclipse.as.runtime.wildfly.80=C\:\\Program Files\\WildFly 8.x AS\\wildfly-8.2.0.Final
+org.jboss.ide.eclipse.as.ui.wizards.LAST_RUNTIME_CREATED=GlassFish 4
+org.jboss.ide.eclipse.as.ui.wizards.LAST_SERVER_CREATED=JBoss Enterprise Application Platform 6.1+1427561685800

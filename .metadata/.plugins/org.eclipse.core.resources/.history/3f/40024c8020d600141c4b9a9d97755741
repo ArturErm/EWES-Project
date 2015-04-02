@@ -1,0 +1,5 @@
+package ee.iati.ewes.dto;
+
+public class DTOUser {
+
+}

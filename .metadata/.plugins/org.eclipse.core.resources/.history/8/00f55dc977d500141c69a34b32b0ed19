@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources xmlns="http://www.jboss.org/ironjacamar/schema">
+ <datasource jndi-name="java:jboss/datasources/MySQL_local" enabled="true" 
+     use-java-context="true" pool-name="MySQL_local">
+  <connection-url>jdbc:mysql://localhost:4040/ewes</connection-url>
+  <driver>mysql-connector-java-5.1.35-bin.jar</driver>
+  <pool></pool>
+  <security>
+   <user-name>ewes_system</user-name>
+   <password>ewes1234</password>
+  </security>
+ </datasource>
+</datasources>

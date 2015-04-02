@@ -1,0 +1,7 @@
+package ee.iati.ewes.ejb;
+
+import javax.ejb.Remote;
+
+@Remote
+public interface ManagementBeanRemote {
+}

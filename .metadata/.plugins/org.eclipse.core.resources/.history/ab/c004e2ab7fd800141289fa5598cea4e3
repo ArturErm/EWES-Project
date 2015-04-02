@@ -1,0 +1,11 @@
+package ee.iati.ewes.ejb;
+
+import java.util.List;
+
+import javax.ejb.Remote;
+
+import ee.iati.ewes.dto.DTOUser;
+
+@Remote
+public interface ManagementBeanRemote {
+}

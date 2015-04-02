@@ -1,0 +1,226 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.dao;
+
+import ee.iati.ewes.dao.exceptions.IllegalOrphanException;
+import ee.iati.ewes.dao.exceptions.NonexistentEntityException;
+import ee.iati.ewes.dao.exceptions.RollbackFailureException;
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import ee.iati.ewes.dto.DTOSubject;
+import ee.iati.ewes.dto.DTOSubjectDescription;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.transaction.UserTransaction;
+
+/**
+ *
+ * @author Artur
+ */
+public class SubjectsJpaController implements Serializable {
+
+    public SubjectsJpaController(UserTransaction utx, EntityManagerFactory emf) {
+        this.utx = utx;
+        this.emf = emf;
+    }
+    private UserTransaction utx = null;
+    private EntityManagerFactory emf = null;
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public void create(DTOSubjectDescription subjects) throws RollbackFailureException, Exception {
+        if (subjects.getAssignedSubjectsList() == null) {
+            subjects.setAssignedSubjectsList(new ArrayList<DTOSubject>());
+        }
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            List<DTOSubject> attachedAssignedSubjectsList = new ArrayList<DTOSubject>();
+            for (DTOSubject assignedSubjectsListAssignedSubjectsToAttach : subjects.getAssignedSubjectsList()) {
+                assignedSubjectsListAssignedSubjectsToAttach = em.getReference(assignedSubjectsListAssignedSubjectsToAttach.getClass(), assignedSubjectsListAssignedSubjectsToAttach.getAssignedSubjectId());
+                attachedAssignedSubjectsList.add(assignedSubjectsListAssignedSubjectsToAttach);
+            }
+            subjects.setAssignedSubjectsList(attachedAssignedSubjectsList);
+            em.persist(subjects);
+            for (DTOSubject assignedSubjectsListAssignedSubjects : subjects.getAssignedSubjectsList()) {
+                DTOSubjectDescription oldSubjectIdOfAssignedSubjectsListAssignedSubjects = assignedSubjectsListAssignedSubjects.getSubjectId();
+                assignedSubjectsListAssignedSubjects.setSubjectId(subjects);
+                assignedSubjectsListAssignedSubjects = em.merge(assignedSubjectsListAssignedSubjects);
+                if (oldSubjectIdOfAssignedSubjectsListAssignedSubjects != null) {
+                    oldSubjectIdOfAssignedSubjectsListAssignedSubjects.getAssignedSubjectsList().remove(assignedSubjectsListAssignedSubjects);
+                    oldSubjectIdOfAssignedSubjectsListAssignedSubjects = em.merge(oldSubjectIdOfAssignedSubjectsListAssignedSubjects);
+                }
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void edit(DTOSubjectDescription subjects) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOSubjectDescription persistentSubjects = em.find(DTOSubjectDescription.class, subjects.getSubjectId());
+            List<DTOSubject> assignedSubjectsListOld = persistentSubjects.getAssignedSubjectsList();
+            List<DTOSubject> assignedSubjectsListNew = subjects.getAssignedSubjectsList();
+            List<String> illegalOrphanMessages = null;
+            for (DTOSubject assignedSubjectsListOldAssignedSubjects : assignedSubjectsListOld) {
+                if (!assignedSubjectsListNew.contains(assignedSubjectsListOldAssignedSubjects)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain AssignedSubjects " + assignedSubjectsListOldAssignedSubjects + " since its subjectId field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<DTOSubject> attachedAssignedSubjectsListNew = new ArrayList<DTOSubject>();
+            for (DTOSubject assignedSubjectsListNewAssignedSubjectsToAttach : assignedSubjectsListNew) {
+                assignedSubjectsListNewAssignedSubjectsToAttach = em.getReference(assignedSubjectsListNewAssignedSubjectsToAttach.getClass(), assignedSubjectsListNewAssignedSubjectsToAttach.getAssignedSubjectId());
+                attachedAssignedSubjectsListNew.add(assignedSubjectsListNewAssignedSubjectsToAttach);
+            }
+            assignedSubjectsListNew = attachedAssignedSubjectsListNew;
+            subjects.setAssignedSubjectsList(assignedSubjectsListNew);
+            subjects = em.merge(subjects);
+            for (DTOSubject assignedSubjectsListNewAssignedSubjects : assignedSubjectsListNew) {
+                if (!assignedSubjectsListOld.contains(assignedSubjectsListNewAssignedSubjects)) {
+                    DTOSubjectDescription oldSubjectIdOfAssignedSubjectsListNewAssignedSubjects = assignedSubjectsListNewAssignedSubjects.getSubjectId();
+                    assignedSubjectsListNewAssignedSubjects.setSubjectId(subjects);
+                    assignedSubjectsListNewAssignedSubjects = em.merge(assignedSubjectsListNewAssignedSubjects);
+                    if (oldSubjectIdOfAssignedSubjectsListNewAssignedSubjects != null && !oldSubjectIdOfAssignedSubjectsListNewAssignedSubjects.equals(subjects)) {
+                        oldSubjectIdOfAssignedSubjectsListNewAssignedSubjects.getAssignedSubjectsList().remove(assignedSubjectsListNewAssignedSubjects);
+                        oldSubjectIdOfAssignedSubjectsListNewAssignedSubjects = em.merge(oldSubjectIdOfAssignedSubjectsListNewAssignedSubjects);
+                    }
+                }
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = subjects.getSubjectId();
+                if (findSubjects(id) == null) {
+                    throw new NonexistentEntityException("The subjects with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOSubjectDescription subjects;
+            try {
+                subjects = em.getReference(DTOSubjectDescription.class, id);
+                subjects.getSubjectId();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The subjects with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<DTOSubject> assignedSubjectsListOrphanCheck = subjects.getAssignedSubjectsList();
+            for (DTOSubject assignedSubjectsListOrphanCheckAssignedSubjects : assignedSubjectsListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Subjects (" + subjects + ") cannot be destroyed since the AssignedSubjects " + assignedSubjectsListOrphanCheckAssignedSubjects + " in its assignedSubjectsList field has a non-nullable subjectId field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            em.remove(subjects);
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public List<DTOSubjectDescription> findSubjectsEntities() {
+        return findSubjectsEntities(true, -1, -1);
+    }
+
+    public List<DTOSubjectDescription> findSubjectsEntities(int maxResults, int firstResult) {
+        return findSubjectsEntities(false, maxResults, firstResult);
+    }
+
+    private List<DTOSubjectDescription> findSubjectsEntities(boolean all, int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(DTOSubjectDescription.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public DTOSubjectDescription findSubjects(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(DTOSubjectDescription.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getSubjectsCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<DTOSubjectDescription> rt = cq.from(DTOSubjectDescription.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+}

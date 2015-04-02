@@ -1,0 +1,53 @@
+package ee.iati.ewes.ejb;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+import javax.jws.WebService;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaQuery;
+
+import ee.iati.ewes.dto.DTOUser;
+import ee.iati.ewes.dto.DTOGroup;
+import ee.iati.ewes.entity.EntityUser;
+
+
+/**
+ * Session Bean implementation class ManagementBean
+ */
+@Stateless
+@LocalBean
+@WebService
+public class ManagementBean implements ManagementBeanRemote {
+	@PersistenceContext EntityManager em;
+	
+	/**
+	 * Default constructor.
+	 */
+	public ManagementBean() {
+	}
+
+	@Override
+	public List<DTOUser> queryUsers() {
+		CriteriaQuery<EntityUser> criteria = em.getCriteriaBuilder().createQuery(EntityUser.class);
+		criteria.select(criteria.from(EntityUser.class));
+		List<EntityUser> lstEntityUsers = em.createQuery(criteria).getResultList();
+		
+		List<DTOUser> lstDTOUsers = new ArrayList<DTOUser>(lstEntityUsers.size());
+		for (EntityUser entity : lstEntityUsers)
+		{
+			lstDTOUsers.add(entity.toDTO());
+		}
+		return lstDTOUsers;
+	}
+	
+	public Map<Integer, DTOGroup> queryGroupsHierarchy()
+	{
+		
+		return null;
+	}
+}

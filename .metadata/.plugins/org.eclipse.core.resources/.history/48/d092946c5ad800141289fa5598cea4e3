@@ -1,0 +1,38 @@
+package ee.iati.ewes.dto;
+
+public class DTOGroup extends DTOBase {
+	private static final long serialVersionUID = 1L;
+	
+	private Integer		groupId;
+	private String		title;
+	private String		description;
+	private DTOGroup	parent;
+
+	public Integer getGroupId()						{ return groupId; }
+	public void setGroupId(Integer groupId)			{ this.groupId = groupId; }
+
+	public String getTitle()						{ return title; }
+	public void setTitle(String title)				{ this.title = title; }
+
+	public String getDescription()					{ return description; }
+	public void setDescription(String description)	{ this.description = description; }
+
+	public DTOGroup getParent()						{ return parent; }
+	public void setParentId(DTOGroup parent)		{ this.parent = parent; }
+
+	
+	public DTOGroup() { }
+	public DTOGroup(Integer groupId, String title, String description, DTOGroup parent) 
+	{ 
+		this.groupId = groupId;
+		this.title = title;
+		this.description = description;
+		this.parent = parent;
+	}
+	
+	@Override
+	public String toString() {
+		return "DTOGroup [groupId=" + groupId + ", title=" + title
+				+ ", description=" + description + ", parent=" + parent + "]";
+	}	
+}

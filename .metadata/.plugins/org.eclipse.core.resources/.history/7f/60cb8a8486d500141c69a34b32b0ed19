@@ -1,0 +1,219 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.dao;
+
+import ee.iati.ewes.dao.exceptions.NonexistentEntityException;
+import ee.iati.ewes.dao.exceptions.RollbackFailureException;
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import ee.iati.ewes.dto.DTOUser;
+import ee.iati.ewes.dto.DTONotification;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.transaction.UserTransaction;
+
+/**
+ *
+ * @author Artur
+ */
+public class NotificationsJpaController implements Serializable {
+
+    public NotificationsJpaController(UserTransaction utx, EntityManagerFactory emf) {
+        this.utx = utx;
+        this.emf = emf;
+    }
+    private UserTransaction utx = null;
+    private EntityManagerFactory emf = null;
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public void create(DTONotification notifications) throws RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOUser recieverId = notifications.getRecieverId();
+            if (recieverId != null) {
+                recieverId = em.getReference(recieverId.getClass(), recieverId.getUserId());
+                notifications.setRecieverId(recieverId);
+            }
+            DTOUser senderId = notifications.getSenderId();
+            if (senderId != null) {
+                senderId = em.getReference(senderId.getClass(), senderId.getUserId());
+                notifications.setSenderId(senderId);
+            }
+            em.persist(notifications);
+            if (recieverId != null) {
+                recieverId.getNotificationsList().add(notifications);
+                recieverId = em.merge(recieverId);
+            }
+            if (senderId != null) {
+                senderId.getNotificationsList().add(notifications);
+                senderId = em.merge(senderId);
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void edit(DTONotification notifications) throws NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTONotification persistentNotifications = em.find(DTONotification.class, notifications.getNotificationId());
+            DTOUser recieverIdOld = persistentNotifications.getRecieverId();
+            DTOUser recieverIdNew = notifications.getRecieverId();
+            DTOUser senderIdOld = persistentNotifications.getSenderId();
+            DTOUser senderIdNew = notifications.getSenderId();
+            if (recieverIdNew != null) {
+                recieverIdNew = em.getReference(recieverIdNew.getClass(), recieverIdNew.getUserId());
+                notifications.setRecieverId(recieverIdNew);
+            }
+            if (senderIdNew != null) {
+                senderIdNew = em.getReference(senderIdNew.getClass(), senderIdNew.getUserId());
+                notifications.setSenderId(senderIdNew);
+            }
+            notifications = em.merge(notifications);
+            if (recieverIdOld != null && !recieverIdOld.equals(recieverIdNew)) {
+                recieverIdOld.getNotificationsList().remove(notifications);
+                recieverIdOld = em.merge(recieverIdOld);
+            }
+            if (recieverIdNew != null && !recieverIdNew.equals(recieverIdOld)) {
+                recieverIdNew.getNotificationsList().add(notifications);
+                recieverIdNew = em.merge(recieverIdNew);
+            }
+            if (senderIdOld != null && !senderIdOld.equals(senderIdNew)) {
+                senderIdOld.getNotificationsList().remove(notifications);
+                senderIdOld = em.merge(senderIdOld);
+            }
+            if (senderIdNew != null && !senderIdNew.equals(senderIdOld)) {
+                senderIdNew.getNotificationsList().add(notifications);
+                senderIdNew = em.merge(senderIdNew);
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = notifications.getNotificationId();
+                if (findNotifications(id) == null) {
+                    throw new NonexistentEntityException("The notifications with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTONotification notifications;
+            try {
+                notifications = em.getReference(DTONotification.class, id);
+                notifications.getNotificationId();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The notifications with id " + id + " no longer exists.", enfe);
+            }
+            DTOUser recieverId = notifications.getRecieverId();
+            if (recieverId != null) {
+                recieverId.getNotificationsList().remove(notifications);
+                recieverId = em.merge(recieverId);
+            }
+            DTOUser senderId = notifications.getSenderId();
+            if (senderId != null) {
+                senderId.getNotificationsList().remove(notifications);
+                senderId = em.merge(senderId);
+            }
+            em.remove(notifications);
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public List<DTONotification> findNotificationsEntities() {
+        return findNotificationsEntities(true, -1, -1);
+    }
+
+    public List<DTONotification> findNotificationsEntities(int maxResults, int firstResult) {
+        return findNotificationsEntities(false, maxResults, firstResult);
+    }
+
+    private List<DTONotification> findNotificationsEntities(boolean all, int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(DTONotification.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public DTONotification findNotifications(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(DTONotification.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getNotificationsCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<DTONotification> rt = cq.from(DTONotification.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+}

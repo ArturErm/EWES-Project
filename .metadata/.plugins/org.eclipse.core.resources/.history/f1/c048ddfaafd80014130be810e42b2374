@@ -1,0 +1,21 @@
+package ee.iati.ewes.web.beans;
+
+import java.io.Serializable;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
+@ManagedBean
+@ViewScoped
+public class MainController implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	private String contentPage;
+	
+	public String getContentPage()					{ return contentPage; }
+	public void setContentPage(String contentPage)	{ this.contentPage = contentPage; }
+	
+	@PostConstruct
+	public void init() { contentPage = "about"; }
+}

@@ -1,0 +1,13 @@
+package ee.iati.ewes.entity;
+
+import javax.annotation.Generated;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+
+@Generated(value="Dali", date="2015-03-29T14:44:46.102+0300")
+@StaticMetamodel(DTOComponent.class)
+public class DTOComponent_ {
+	public static volatile SingularAttribute<DTOComponent, Integer> compId;
+	public static volatile SingularAttribute<DTOComponent, String> titleId;
+	public static volatile SingularAttribute<DTOComponent, String> descrId;
+}

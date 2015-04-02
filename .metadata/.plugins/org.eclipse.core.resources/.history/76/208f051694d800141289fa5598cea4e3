@@ -1,0 +1,5 @@
+package ee.iati.ewes.utils;
+
+public enum GROUP_LINK_TYPE {
+
+}

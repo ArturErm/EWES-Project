@@ -1,0 +1,335 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.dao;
+
+import ee.iati.ewes.dao.exceptions.NonexistentEntityException;
+import ee.iati.ewes.dao.exceptions.RollbackFailureException;
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import ee.iati.ewes.dto.DTOAccessRight;
+import ee.iati.ewes.dto.DTOAccessRule;
+import ee.iati.ewes.dto.DTOSubject;
+import ee.iati.ewes.dto.DTOComponent;
+import ee.iati.ewes.dto.DTOUser;
+import ee.iati.ewes.dto.DTOGroup;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.transaction.UserTransaction;
+
+/**
+ *
+ * @author Artur
+ */
+public class AclJpaController implements Serializable {
+
+    public AclJpaController(UserTransaction utx, EntityManagerFactory emf) {
+        this.utx = utx;
+        this.emf = emf;
+    }
+    private UserTransaction utx = null;
+    private EntityManagerFactory emf = null;
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public void create(DTOAccessRule acl) throws RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOAccessRight arId = acl.getArId();
+            if (arId != null) {
+                arId = em.getReference(arId.getClass(), arId.getArId());
+                acl.setArId(arId);
+            }
+            DTOSubject assignedSubjectId = acl.getAssignedSubjectId();
+            if (assignedSubjectId != null) {
+                assignedSubjectId = em.getReference(assignedSubjectId.getClass(), assignedSubjectId.getAssignedSubjectId());
+                acl.setAssignedSubjectId(assignedSubjectId);
+            }
+            DTOComponent compId = acl.getCompId();
+            if (compId != null) {
+                compId = em.getReference(compId.getClass(), compId.getCompId());
+                acl.setCompId(compId);
+            }
+            DTOUser creatorId = acl.getCreatorId();
+            if (creatorId != null) {
+                creatorId = em.getReference(creatorId.getClass(), creatorId.getUserId());
+                acl.setCreatorId(creatorId);
+            }
+            DTOGroup groupId = acl.getGroupId();
+            if (groupId != null) {
+                groupId = em.getReference(groupId.getClass(), groupId.getGroupId());
+                acl.setGroupId(groupId);
+            }
+            DTOUser userId = acl.getUserId();
+            if (userId != null) {
+                userId = em.getReference(userId.getClass(), userId.getUserId());
+                acl.setUserId(userId);
+            }
+            em.persist(acl);
+            if (arId != null) {
+                arId.getAclList().add(acl);
+                arId = em.merge(arId);
+            }
+            if (assignedSubjectId != null) {
+                assignedSubjectId.getAclList().add(acl);
+                assignedSubjectId = em.merge(assignedSubjectId);
+            }
+            if (compId != null) {
+                compId.getAclList().add(acl);
+                compId = em.merge(compId);
+            }
+            if (creatorId != null) {
+                creatorId.getAclList().add(acl);
+                creatorId = em.merge(creatorId);
+            }
+            if (groupId != null) {
+                groupId.getAclList().add(acl);
+                groupId = em.merge(groupId);
+            }
+            if (userId != null) {
+                userId.getAclList().add(acl);
+                userId = em.merge(userId);
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void edit(DTOAccessRule acl) throws NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOAccessRule persistentAcl = em.find(DTOAccessRule.class, acl.getAclId());
+            DTOAccessRight arIdOld = persistentAcl.getArId();
+            DTOAccessRight arIdNew = acl.getArId();
+            DTOSubject assignedSubjectIdOld = persistentAcl.getAssignedSubjectId();
+            DTOSubject assignedSubjectIdNew = acl.getAssignedSubjectId();
+            DTOComponent compIdOld = persistentAcl.getCompId();
+            DTOComponent compIdNew = acl.getCompId();
+            DTOUser creatorIdOld = persistentAcl.getCreatorId();
+            DTOUser creatorIdNew = acl.getCreatorId();
+            DTOGroup groupIdOld = persistentAcl.getGroupId();
+            DTOGroup groupIdNew = acl.getGroupId();
+            DTOUser userIdOld = persistentAcl.getUserId();
+            DTOUser userIdNew = acl.getUserId();
+            if (arIdNew != null) {
+                arIdNew = em.getReference(arIdNew.getClass(), arIdNew.getArId());
+                acl.setArId(arIdNew);
+            }
+            if (assignedSubjectIdNew != null) {
+                assignedSubjectIdNew = em.getReference(assignedSubjectIdNew.getClass(), assignedSubjectIdNew.getAssignedSubjectId());
+                acl.setAssignedSubjectId(assignedSubjectIdNew);
+            }
+            if (compIdNew != null) {
+                compIdNew = em.getReference(compIdNew.getClass(), compIdNew.getCompId());
+                acl.setCompId(compIdNew);
+            }
+            if (creatorIdNew != null) {
+                creatorIdNew = em.getReference(creatorIdNew.getClass(), creatorIdNew.getUserId());
+                acl.setCreatorId(creatorIdNew);
+            }
+            if (groupIdNew != null) {
+                groupIdNew = em.getReference(groupIdNew.getClass(), groupIdNew.getGroupId());
+                acl.setGroupId(groupIdNew);
+            }
+            if (userIdNew != null) {
+                userIdNew = em.getReference(userIdNew.getClass(), userIdNew.getUserId());
+                acl.setUserId(userIdNew);
+            }
+            acl = em.merge(acl);
+            if (arIdOld != null && !arIdOld.equals(arIdNew)) {
+                arIdOld.getAclList().remove(acl);
+                arIdOld = em.merge(arIdOld);
+            }
+            if (arIdNew != null && !arIdNew.equals(arIdOld)) {
+                arIdNew.getAclList().add(acl);
+                arIdNew = em.merge(arIdNew);
+            }
+            if (assignedSubjectIdOld != null && !assignedSubjectIdOld.equals(assignedSubjectIdNew)) {
+                assignedSubjectIdOld.getAclList().remove(acl);
+                assignedSubjectIdOld = em.merge(assignedSubjectIdOld);
+            }
+            if (assignedSubjectIdNew != null && !assignedSubjectIdNew.equals(assignedSubjectIdOld)) {
+                assignedSubjectIdNew.getAclList().add(acl);
+                assignedSubjectIdNew = em.merge(assignedSubjectIdNew);
+            }
+            if (compIdOld != null && !compIdOld.equals(compIdNew)) {
+                compIdOld.getAclList().remove(acl);
+                compIdOld = em.merge(compIdOld);
+            }
+            if (compIdNew != null && !compIdNew.equals(compIdOld)) {
+                compIdNew.getAclList().add(acl);
+                compIdNew = em.merge(compIdNew);
+            }
+            if (creatorIdOld != null && !creatorIdOld.equals(creatorIdNew)) {
+                creatorIdOld.getAclList().remove(acl);
+                creatorIdOld = em.merge(creatorIdOld);
+            }
+            if (creatorIdNew != null && !creatorIdNew.equals(creatorIdOld)) {
+                creatorIdNew.getAclList().add(acl);
+                creatorIdNew = em.merge(creatorIdNew);
+            }
+            if (groupIdOld != null && !groupIdOld.equals(groupIdNew)) {
+                groupIdOld.getAclList().remove(acl);
+                groupIdOld = em.merge(groupIdOld);
+            }
+            if (groupIdNew != null && !groupIdNew.equals(groupIdOld)) {
+                groupIdNew.getAclList().add(acl);
+                groupIdNew = em.merge(groupIdNew);
+            }
+            if (userIdOld != null && !userIdOld.equals(userIdNew)) {
+                userIdOld.getAclList().remove(acl);
+                userIdOld = em.merge(userIdOld);
+            }
+            if (userIdNew != null && !userIdNew.equals(userIdOld)) {
+                userIdNew.getAclList().add(acl);
+                userIdNew = em.merge(userIdNew);
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = acl.getAclId();
+                if (findAcl(id) == null) {
+                    throw new NonexistentEntityException("The acl with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOAccessRule acl;
+            try {
+                acl = em.getReference(DTOAccessRule.class, id);
+                acl.getAclId();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The acl with id " + id + " no longer exists.", enfe);
+            }
+            DTOAccessRight arId = acl.getArId();
+            if (arId != null) {
+                arId.getAclList().remove(acl);
+                arId = em.merge(arId);
+            }
+            DTOSubject assignedSubjectId = acl.getAssignedSubjectId();
+            if (assignedSubjectId != null) {
+                assignedSubjectId.getAclList().remove(acl);
+                assignedSubjectId = em.merge(assignedSubjectId);
+            }
+            DTOComponent compId = acl.getCompId();
+            if (compId != null) {
+                compId.getAclList().remove(acl);
+                compId = em.merge(compId);
+            }
+            DTOUser creatorId = acl.getCreatorId();
+            if (creatorId != null) {
+                creatorId.getAclList().remove(acl);
+                creatorId = em.merge(creatorId);
+            }
+            DTOGroup groupId = acl.getGroupId();
+            if (groupId != null) {
+                groupId.getAclList().remove(acl);
+                groupId = em.merge(groupId);
+            }
+            DTOUser userId = acl.getUserId();
+            if (userId != null) {
+                userId.getAclList().remove(acl);
+                userId = em.merge(userId);
+            }
+            em.remove(acl);
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public List<DTOAccessRule> findAclEntities() {
+        return findAclEntities(true, -1, -1);
+    }
+
+    public List<DTOAccessRule> findAclEntities(int maxResults, int firstResult) {
+        return findAclEntities(false, maxResults, firstResult);
+    }
+
+    private List<DTOAccessRule> findAclEntities(boolean all, int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(DTOAccessRule.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public DTOAccessRule findAcl(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(DTOAccessRule.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getAclCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<DTOAccessRule> rt = cq.from(DTOAccessRule.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+}

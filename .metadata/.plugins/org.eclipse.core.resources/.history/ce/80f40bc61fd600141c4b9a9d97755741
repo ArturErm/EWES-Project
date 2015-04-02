@@ -1,0 +1,13 @@
+package ee.iati.ewes.entity;
+
+import javax.annotation.Generated;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+
+@Generated(value="Dali", date="2015-03-29T15:01:55.984+0300")
+@StaticMetamodel(DTOAccessRight.class)
+public class DTOAccessRight_ {
+	public static volatile SingularAttribute<DTOAccessRight, Integer> arId;
+	public static volatile SingularAttribute<DTOAccessRight, String> arTitleId;
+	public static volatile SingularAttribute<DTOAccessRight, String> arDescrId;
+}

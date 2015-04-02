@@ -1,0 +1,8 @@
+package ee.iati.ewes.dto.converters;
+
+public class EntotyDTOConverter {
+	public static <? extends DTOBase> entityToDTO(<T extends Serealizable> entity)
+	{
+		
+	}
+}

@@ -1,0 +1,269 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.dao;
+
+import ee.iati.ewes.dao.exceptions.IllegalOrphanException;
+import ee.iati.ewes.dao.exceptions.NonexistentEntityException;
+import ee.iati.ewes.dao.exceptions.PreexistingEntityException;
+import ee.iati.ewes.dao.exceptions.RollbackFailureException;
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import ee.iati.ewes.dto.DTOLinkType;
+import ee.iati.ewes.dto.DTOAccessRule;
+import ee.iati.ewes.dto.DTOComponent;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.transaction.UserTransaction;
+
+/**
+ *
+ * @author Artur
+ */
+public class ComponentsJpaController implements Serializable {
+
+    public ComponentsJpaController(UserTransaction utx, EntityManagerFactory emf) {
+        this.utx = utx;
+        this.emf = emf;
+    }
+    private UserTransaction utx = null;
+    private EntityManagerFactory emf = null;
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public void create(DTOComponent components) throws PreexistingEntityException, RollbackFailureException, Exception {
+        if (components.getAclList() == null) {
+            components.setAclList(new ArrayList<DTOAccessRule>());
+        }
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOLinkType linkTypes = components.getLinkTypes();
+            if (linkTypes != null) {
+                linkTypes = em.getReference(linkTypes.getClass(), linkTypes.getLinkTypeId());
+                components.setLinkTypes(linkTypes);
+            }
+            List<DTOAccessRule> attachedAclList = new ArrayList<DTOAccessRule>();
+            for (DTOAccessRule aclListAclToAttach : components.getAclList()) {
+                aclListAclToAttach = em.getReference(aclListAclToAttach.getClass(), aclListAclToAttach.getAclId());
+                attachedAclList.add(aclListAclToAttach);
+            }
+            components.setAclList(attachedAclList);
+            em.persist(components);
+            if (linkTypes != null) {
+                DTOComponent oldComponentsOfLinkTypes = linkTypes.getComponents();
+                if (oldComponentsOfLinkTypes != null) {
+                    oldComponentsOfLinkTypes.setLinkTypes(null);
+                    oldComponentsOfLinkTypes = em.merge(oldComponentsOfLinkTypes);
+                }
+                linkTypes.setComponents(components);
+                linkTypes = em.merge(linkTypes);
+            }
+            for (DTOAccessRule aclListAcl : components.getAclList()) {
+                DTOComponent oldCompIdOfAclListAcl = aclListAcl.getCompId();
+                aclListAcl.setCompId(components);
+                aclListAcl = em.merge(aclListAcl);
+                if (oldCompIdOfAclListAcl != null) {
+                    oldCompIdOfAclListAcl.getAclList().remove(aclListAcl);
+                    oldCompIdOfAclListAcl = em.merge(oldCompIdOfAclListAcl);
+                }
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            if (findComponents(components.getCompId()) != null) {
+                throw new PreexistingEntityException("Components " + components + " already exists.", ex);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void edit(DTOComponent components) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOComponent persistentComponents = em.find(DTOComponent.class, components.getCompId());
+            DTOLinkType linkTypesOld = persistentComponents.getLinkTypes();
+            DTOLinkType linkTypesNew = components.getLinkTypes();
+            List<DTOAccessRule> aclListOld = persistentComponents.getAclList();
+            List<DTOAccessRule> aclListNew = components.getAclList();
+            List<String> illegalOrphanMessages = null;
+            if (linkTypesOld != null && !linkTypesOld.equals(linkTypesNew)) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("You must retain LinkTypes " + linkTypesOld + " since its components field is not nullable.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            if (linkTypesNew != null) {
+                linkTypesNew = em.getReference(linkTypesNew.getClass(), linkTypesNew.getLinkTypeId());
+                components.setLinkTypes(linkTypesNew);
+            }
+            List<DTOAccessRule> attachedAclListNew = new ArrayList<DTOAccessRule>();
+            for (DTOAccessRule aclListNewAclToAttach : aclListNew) {
+                aclListNewAclToAttach = em.getReference(aclListNewAclToAttach.getClass(), aclListNewAclToAttach.getAclId());
+                attachedAclListNew.add(aclListNewAclToAttach);
+            }
+            aclListNew = attachedAclListNew;
+            components.setAclList(aclListNew);
+            components = em.merge(components);
+            if (linkTypesNew != null && !linkTypesNew.equals(linkTypesOld)) {
+                DTOComponent oldComponentsOfLinkTypes = linkTypesNew.getComponents();
+                if (oldComponentsOfLinkTypes != null) {
+                    oldComponentsOfLinkTypes.setLinkTypes(null);
+                    oldComponentsOfLinkTypes = em.merge(oldComponentsOfLinkTypes);
+                }
+                linkTypesNew.setComponents(components);
+                linkTypesNew = em.merge(linkTypesNew);
+            }
+            for (DTOAccessRule aclListOldAcl : aclListOld) {
+                if (!aclListNew.contains(aclListOldAcl)) {
+                    aclListOldAcl.setCompId(null);
+                    aclListOldAcl = em.merge(aclListOldAcl);
+                }
+            }
+            for (DTOAccessRule aclListNewAcl : aclListNew) {
+                if (!aclListOld.contains(aclListNewAcl)) {
+                    DTOComponent oldCompIdOfAclListNewAcl = aclListNewAcl.getCompId();
+                    aclListNewAcl.setCompId(components);
+                    aclListNewAcl = em.merge(aclListNewAcl);
+                    if (oldCompIdOfAclListNewAcl != null && !oldCompIdOfAclListNewAcl.equals(components)) {
+                        oldCompIdOfAclListNewAcl.getAclList().remove(aclListNewAcl);
+                        oldCompIdOfAclListNewAcl = em.merge(oldCompIdOfAclListNewAcl);
+                    }
+                }
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = components.getCompId();
+                if (findComponents(id) == null) {
+                    throw new NonexistentEntityException("The components with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOComponent components;
+            try {
+                components = em.getReference(DTOComponent.class, id);
+                components.getCompId();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The components with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            DTOLinkType linkTypesOrphanCheck = components.getLinkTypes();
+            if (linkTypesOrphanCheck != null) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Components (" + components + ") cannot be destroyed since the LinkTypes " + linkTypesOrphanCheck + " in its linkTypes field has a non-nullable components field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<DTOAccessRule> aclList = components.getAclList();
+            for (DTOAccessRule aclListAcl : aclList) {
+                aclListAcl.setCompId(null);
+                aclListAcl = em.merge(aclListAcl);
+            }
+            em.remove(components);
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public List<DTOComponent> findComponentsEntities() {
+        return findComponentsEntities(true, -1, -1);
+    }
+
+    public List<DTOComponent> findComponentsEntities(int maxResults, int firstResult) {
+        return findComponentsEntities(false, maxResults, firstResult);
+    }
+
+    private List<DTOComponent> findComponentsEntities(boolean all, int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(DTOComponent.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public DTOComponent findComponents(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(DTOComponent.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getComponentsCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<DTOComponent> rt = cq.from(DTOComponent.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+}

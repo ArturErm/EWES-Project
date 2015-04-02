@@ -1,0 +1,147 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.dto;
+
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+/**
+ *
+ * @author Artur
+ */
+@Entity
+@Table(name = "acl")
+@NamedQueries({
+		@NamedQuery(name = "DTOAccessRule.findAll", query = "SELECT a FROM DTOAccessRule a"),
+		@NamedQuery(name = "DTOAccessRule.findByAclId", query = "SELECT a FROM DTOAccessRule a WHERE a.aclId = :aclId") })
+public class DTOAccessRule implements Serializable {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "ACL_ID")
+	private Integer aclId;
+	@JoinColumn(name = "AR_ID", referencedColumnName = "AR_ID")
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	private DTOAccessRight arId;
+	@JoinColumn(name = "ASSIGNED_SUBJECT_ID", referencedColumnName = "ASSIGNED_SUBJECT_ID")
+	@ManyToOne(fetch = FetchType.EAGER)
+	private DTOSubject assignedSubjectId;
+	@JoinColumn(name = "COMP_ID", referencedColumnName = "COMP_ID")
+	@ManyToOne(fetch = FetchType.EAGER)
+	private DTOComponent compId;
+	@JoinColumn(name = "CREATOR_ID", referencedColumnName = "USER_ID")
+	@ManyToOne(fetch = FetchType.EAGER)
+	private DTOUser creatorId;
+	@JoinColumn(name = "GROUP_ID", referencedColumnName = "GROUP_ID")
+	@ManyToOne(fetch = FetchType.EAGER)
+	private DTOGroup groupId;
+	@JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
+	@ManyToOne(fetch = FetchType.EAGER)
+	private DTOUser userId;
+
+	public DTOAccessRule() {
+	}
+
+	public DTOAccessRule(Integer aclId) {
+		this.aclId = aclId;
+	}
+
+	public Integer getAclId() {
+		return aclId;
+	}
+
+	public void setAclId(Integer aclId) {
+		this.aclId = aclId;
+	}
+
+	public DTOAccessRight getArId() {
+		return arId;
+	}
+
+	public void setArId(DTOAccessRight arId) {
+		this.arId = arId;
+	}
+
+	public DTOSubject getAssignedSubjectId() {
+		return assignedSubjectId;
+	}
+
+	public void setAssignedSubjectId(DTOSubject assignedSubjectId) {
+		this.assignedSubjectId = assignedSubjectId;
+	}
+
+	public DTOComponent getCompId() {
+		return compId;
+	}
+
+	public void setCompId(DTOComponent compId) {
+		this.compId = compId;
+	}
+
+	public DTOUser getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(DTOUser creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	public DTOGroup getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(DTOGroup groupId) {
+		this.groupId = groupId;
+	}
+
+	public DTOUser getUserId() {
+		return userId;
+	}
+
+	public void setUserId(DTOUser userId) {
+		this.userId = userId;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (aclId != null ? aclId.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof DTOAccessRule)) {
+			return false;
+		}
+		DTOAccessRule other = (DTOAccessRule) object;
+		if ((this.aclId == null && other.aclId != null)
+				|| (this.aclId != null && !this.aclId.equals(other.aclId))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ee.iati.ewes.dto.Acl[ aclId=" + aclId + " ]";
+	}
+
+}

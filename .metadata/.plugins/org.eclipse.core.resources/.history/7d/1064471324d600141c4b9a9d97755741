@@ -1,0 +1,5 @@
+package ee.iati.ewes.utils;
+
+public interface ConvertableToDTO {
+	<T extends DTOBase> toDTO(Class<?> clazz);
+}

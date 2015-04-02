@@ -1,0 +1,7 @@
+#Wed Apr 01 23:58:34 EEST 2015
+__DEFAULT__=false
+org.eclipse.sdk.Eclipse.master=true
+org.eclipse.sdk.Google.master=true
+org.eclipse.help.ui.localSearch.master=true
+org.hibernate.eclipse.help.HibernateWiki.master=true
+expression=JBoss Tools HTML Editor

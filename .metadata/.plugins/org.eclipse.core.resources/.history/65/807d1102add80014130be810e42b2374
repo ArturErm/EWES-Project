@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+<!-- INTERFACE -->
+<composite:interface>
+	<composite:attribute name="addUserForm" />
+</composite:interface>
+
+<!-- IMPLEMENTATION -->
+<composite:implementation>
+	<h:panelGrid columns="3">
+		<h:outputLabel for="fname" value="First Name:" />
+		<h:inputText id="fname" value="#{userBean.user.fname}">
+			<rich:validator />
+		</h:inputText>
+		<rich:message for="fname" errorClass="invalid" />
+		
+		<h:outputLabel for="lname" value="Last Name:" />
+		<h:inputText id="lname" value="#{userBean.user.lname}">
+			<rich:validator />
+		</h:inputText>
+		<rich:message for="lname" errorClass="invalid" />
+
+		<h:outputLabel for="email" value="Email:" />
+		<h:inputText id="email" value="#{userBean.user.email}">
+			<rich:validator />
+		</h:inputText>
+		<rich:message for="email" errorClass="invalid" />
+
+		<h:outputLabel for="ik" value="Isikukood:" />
+		<h:inputText id="ik" value="#{cc.attrs.member.phoneNumber}">
+			<rich:validator />
+		</h:inputText>
+		<rich:message for="ik" errorClass="invalid" />
+	</h:panelGrid>
+</composite:implementation>
+</html>

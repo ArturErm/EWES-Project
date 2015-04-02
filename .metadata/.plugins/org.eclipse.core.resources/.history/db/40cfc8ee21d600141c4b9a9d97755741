@@ -1,0 +1,13 @@
+package ee.iati.ewes.dto.converters;
+
+import java.io.Serializable;
+
+import ee.iati.ewes.utils.DTOBase;
+
+public class EntotyDTOConverter {
+	public <T extends DTOBase> entityToDTO(Class<? extends DTOBase> clazz, Serializable entity)
+	{
+		
+		return null;
+	}
+}

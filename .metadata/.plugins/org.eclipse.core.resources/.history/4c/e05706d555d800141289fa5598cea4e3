@@ -1,0 +1,54 @@
+package ee.iati.ewes.web.controller.tree;
+
+import java.util.Enumeration;
+import java.util.List;
+
+import javax.swing.tree.TreeNode;
+
+import com.google.common.collect.Iterators;
+
+public class UserNode extends NamedNode implements TreeNode {
+
+public UserNode() { this.setType("user"); }
+	private TreeNode parent;
+
+	@Override
+	public TreeNode getChildAt(int childIndex) {
+		return null;
+	}
+
+	@Override
+	public int getChildCount() {
+		return 0;
+	}
+
+	@Override
+	public TreeNode getParent() {
+		return parent;
+	}
+
+	@Override
+	public int getIndex(TreeNode node) {
+		return childNodes.indexOf(node);
+	}
+
+	@Override
+	public boolean getAllowsChildren() {
+		return true;
+	}
+
+	@Override
+	public boolean isLeaf() {
+		return childNodes.isEmpty();
+	}
+
+	@Override
+	public Enumeration<TreeNode> children() {
+		return Iterators.asEnumeration(childNodes.iterator());
+	}
+	
+	public List<TreeNode> getChildren()
+	{
+		return childNodes;
+	}
+}

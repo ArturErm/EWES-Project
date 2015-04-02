@@ -1,0 +1,1299 @@
+!SESSION 
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 18:55:13.815
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 18:55:17.729
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-28 18:59:32.987
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 18:59:33.078
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 19:03:10.834
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 19:03:13.741
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-28 20:20:17.649
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 20:20:18.099
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 20:23:06.942
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 20:23:09.852
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-28 20:30:43.752
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 20:30:43.973
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 20:30:50.877
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 20:30:53.791
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 20:33:35.583
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 20:33:40.760
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 20:33:43.668
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-28 20:54:33.612
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842785 2015-03-28 20:54:33.788
+!MESSAGE Server Shutdown Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 20:54:35.032
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 20:54:38.146
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-28 21:23:10.525
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 21:23:10.759
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 21:23:11.987
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 21:23:14.899
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-28 21:30:00.800
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 21:30:01.122
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 21:30:02.352
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 21:30:05.366
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-28 21:33:25.417
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 21:33:25.710
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 21:33:26.937
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 21:33:29.919
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-28 21:36:55.383
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 21:36:55.562
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 21:36:56.784
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 21:36:59.692
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-28 21:38:17.071
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 21:38:17.263
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 21:38:18.497
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 21:38:21.329
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-28 22:09:12.080
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 22:09:12.276
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 22:09:13.507
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 22:09:16.824
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-28 22:11:21.423
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 22:11:21.616
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 22:11:22.853
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 22:11:25.764
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-28 22:13:07.276
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 22:13:07.490
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 22:13:08.714
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 22:13:11.721
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-28 22:20:23.488
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 22:20:23.653
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 22:20:24.880
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 22:20:27.787
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-28 22:30:05.431
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 22:30:05.804
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 22:30:07.042
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 22:30:10.049
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-28 22:34:09.654
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 22:34:09.827
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 22:34:11.059
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 22:34:14.067
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-28 22:37:38.736
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 22:37:38.921
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-28 22:37:40.149
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-28 22:37:43.056
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-28 22:54:58.051
+!MESSAGE Server processes have been terminated.
+!SESSION 
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 14:17:28.703
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 14:17:33.262
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 14:29:26.633
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 14:29:26.776
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 14:29:28.033
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 14:29:31.240
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 14:31:31.969
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 14:31:32.094
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 14:31:33.363
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 14:31:36.178
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 14:32:42.092
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 14:32:42.182
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 14:32:43.412
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 14:32:46.220
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 14:35:33.943
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 14:35:34.044
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 14:35:35.370
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 14:35:38.278
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 14:38:46.334
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 14:38:46.454
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 14:38:47.713
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 14:38:50.520
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 14:42:24.798
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 14:42:25.065
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 14:42:26.292
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 14:42:29.200
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 14:43:07.038
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 14:43:07.184
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 14:43:08.426
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 14:43:11.439
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 14:44:51.734
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 14:44:51.889
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 14:44:53.147
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 14:44:56.061
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 14:45:12.413
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 14:45:12.598
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 14:45:13.857
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 14:45:16.765
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 14:48:17.473
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 14:48:17.639
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 14:48:18.876
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 14:48:21.882
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 14:52:26.308
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 14:52:26.475
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 2 16842768 2015-03-29 14:52:26.479
+!MESSAGE Poll Thread Aborted: null
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 14:52:27.707
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 14:52:30.620
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 14:57:44.268
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 14:57:44.448
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 14:57:45.683
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 14:57:48.691
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 14:58:26.424
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 14:58:26.602
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 14:58:27.828
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 14:58:30.635
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 15:07:30.508
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 15:07:30.771
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 2 16842768 2015-03-29 15:07:30.787
+!MESSAGE Poll Thread Aborted: null
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 15:07:32.036
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 15:07:34.942
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 15:08:51.882
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 15:08:52.050
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 15:08:53.297
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 15:08:56.205
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 15:10:01.987
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 15:10:02.158
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 15:10:03.389
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 15:10:06.797
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 15:13:18.821
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 15:13:19.048
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 15:13:20.279
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 15:13:23.284
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 15:22:55.181
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 15:22:55.331
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 2 16842768 2015-03-29 15:22:55.334
+!MESSAGE Poll Thread Aborted: null
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 15:22:56.559
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 15:22:59.465
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-03-29 15:59:10.088
+!MESSAGE Incremental publish failed for module ewes
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-03-29 15:59:10.088
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesDTO.jar. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 16:15:24.078
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 16:15:24.182
+!MESSAGE Server processes have been terminated.
+!SESSION 
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 21:39:25.482
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 21:39:28.966
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 0 2015-03-29 21:39:29.427
+!MESSAGE Module ewesWeb on JBoss Enterprise Application Platform 6.1+ not yet fully deployed. Waiting...
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 21:44:02.374
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 21:44:02.933
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 21:44:04.252
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 21:44:07.199
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 21:46:46.994
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842785 2015-03-29 21:47:05.051
+!MESSAGE Server Shutdown Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 21:47:06.795
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 21:47:10.224
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-03-29 21:51:17.680
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 21:51:18.134
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-03-29 21:51:19.384
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-03-29 21:51:22.292
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-03-29 22:10:59.651
+!MESSAGE Server processes have been terminated.
+!SESSION 
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 11:03:39.963
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 11:03:44.533
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-01 11:35:11.677
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 11:35:11.978
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 11:35:13.214
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 11:35:16.223
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-01 11:40:20.713
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 11:40:21.029
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 11:40:22.279
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 11:40:25.186
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-01 11:43:11.904
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 11:43:12.286
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 11:43:13.531
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 11:43:16.439
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-01 13:41:55.176
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 13:41:55.435
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 2 16842768 2015-04-01 13:41:55.446
+!MESSAGE Poll Thread Aborted: null
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 14:49:07.225
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 14:49:10.151
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-01 14:57:29.427
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 14:57:29.892
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 14:57:31.154
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 14:57:34.561
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-01 15:58:44.011
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 15:58:44.386
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 15:58:46.249
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 15:58:49.298
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-01 16:07:52.839
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 16:07:53.262
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 16:07:54.502
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 16:07:57.577
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 16:13:32.774
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:13:32.774
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-01 16:19:38.787
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 16:19:39.752
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 16:19:41.817
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 16:19:45.297
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 16:37:13.468
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:37:13.468
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:37:13.468
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:37:13.468
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:37:13.468
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/resources/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 16:44:03.053
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:44:03.053
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:44:03.053
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:44:03.053
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:44:03.053
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/resources/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 16:45:33.640
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:45:33.640
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\WEB-INF\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:45:33.640
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\WEB-INF\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:45:33.640
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\WEB-INF\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:45:33.640
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/WEB-INF/img. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:45:33.640
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:45:33.640
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:45:33.640
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:45:33.641
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/resources/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 16:45:54.462
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:45:54.463
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\WEB-INF\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:45:54.463
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\WEB-INF\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:45:54.463
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\WEB-INF\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 16:45:54.463
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/WEB-INF/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-01 16:46:21.242
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 16:46:22.365
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 16:46:25.243
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 16:46:28.986
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-01 17:28:42.057
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 17:28:42.407
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 17:28:44.342
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 17:28:47.250
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 17:38:24.607
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:38:24.607
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:38:24.607
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:38:24.607
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 17:41:41.623
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:41:41.623
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:41:41.623
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:41:41.623
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:41:41.623
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/resources/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 17:41:56.136
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:41:56.136
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:41:56.136
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:41:56.136
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:41:56.136
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/resources/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 17:43:34.617
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:43:34.617
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:43:34.617
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:43:34.617
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:43:34.617
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/resources/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 17:44:34.730
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:44:34.730
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:44:34.730
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:44:34.730
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:44:34.730
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/resources/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 17:45:53.995
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:45:53.995
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:45:53.996
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:45:53.996
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:45:53.996
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/resources/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 17:50:34.685
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:50:34.685
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:50:34.685
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:50:34.685
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:50:34.685
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/resources/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 17:51:09.245
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:51:09.245
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:51:09.245
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:51:09.245
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:51:09.245
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/resources/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 17:52:14.340
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:52:14.340
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:52:14.340
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:52:14.340
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:52:14.340
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/resources/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 17:52:34.345
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:52:34.345
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:52:34.345
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:52:34.345
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:52:34.345
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/resources/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 17:54:34.368
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:54:34.368
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:54:34.368
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:54:34.368
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:54:34.368
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/resources/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 17:54:40.755
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:54:40.755
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:54:40.755
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:54:40.755
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:54:40.755
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/resources/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 17:55:04.564
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:55:04.564
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:55:04.564
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:55:04.564
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:55:04.564
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/resources/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 4 1644298244 2015-04-01 17:55:17.250
+!MESSAGE Incremental publish failed for module ewesWebModule
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:55:17.250
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:55:17.250
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\group_folder_open.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:55:17.250
+!MESSAGE Could not delete C:\Program Files\JBoss_IDE\runtimes\jboss-eap\standalone\deployments\ewes.ear\ewesWebModule.war\resources\img\user.png. May be locked by another process.
+!SUBENTRY 1 org.jboss.ide.eclipse.as.wtp.core 4 1644298251 2015-04-01 17:55:17.250
+!MESSAGE Could not delete C:/Program Files/JBoss_IDE/runtimes/jboss-eap/standalone/deployments/ewes.ear/ewesWebModule.war/resources/img. May be locked by another process.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-01 19:09:32.521
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842785 2015-04-01 19:09:33.648
+!MESSAGE Server Shutdown Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 19:09:35.144
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 19:09:39.603
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 19:11:49.578
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 19:11:55.277
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 19:11:59.104
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-01 19:23:20.217
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 19:23:20.816
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 19:23:22.217
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 19:23:25.126
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-01 19:24:10.258
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 19:24:10.826
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 19:24:16.342
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 19:24:19.295
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-01 19:27:18.927
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 19:27:19.201
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 19:27:20.444
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 19:27:23.351
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-01 20:52:01.517
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 20:52:02.848
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 20:52:08.088
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 20:52:12.930
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 21:54:03.719
+!MESSAGE Server processes have been terminated.
+!SESSION 
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 22:03:52.440
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 22:03:55.356
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-01 23:50:00.451
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-01 23:50:00.789
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-01 23:50:02.031
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-01 23:50:04.951
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 00:50:52.151
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 00:50:52.764
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 00:50:54.011
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 00:50:56.922
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 00:56:19.463
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 00:56:20.053
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 00:56:21.287
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 00:56:24.196
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 00:58:41.868
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 00:58:42.115
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 00:58:43.357
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 00:58:46.266
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 01:06:06.227
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 01:06:06.788
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 01:06:08.024
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 01:06:10.935
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 01:07:44.106
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842785 2015-04-02 01:07:46.725
+!MESSAGE Server Shutdown Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 01:07:47.975
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 01:07:50.984
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 01:08:51.366
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 01:08:51.960
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 01:08:53.196
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 01:08:56.105
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 01:21:08.479
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842785 2015-04-02 01:21:09.566
+!MESSAGE Server Shutdown Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 01:21:10.790
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 01:21:13.798
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 01:35:48.816
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 01:35:49.363
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 01:35:50.600
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 01:35:53.507
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 01:38:34.407
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 01:38:34.460
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 01:39:02.155
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 01:39:05.063
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 01:43:15.101
+!MESSAGE Server processes have been terminated.
+!SESSION 
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 01:44:30.906
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 01:44:33.750
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 02:30:10.412
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 02:30:10.841
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 02:30:12.081
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 02:30:14.991
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 02:48:58.224
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 02:48:58.638
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 02:48:59.899
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 02:49:03.310
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 03:04:31.822
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 03:04:32.110
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 03:04:33.343
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 03:04:36.252
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 03:08:51.877
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 03:08:52.419
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 03:08:53.659
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 03:08:56.572
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 03:35:55.560
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 03:35:56.419
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 03:35:57.659
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 03:36:00.568
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 03:47:23.457
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 03:47:24.050
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 03:47:25.295
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 03:47:28.203
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 03:49:08.808
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 03:49:09.414
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 03:49:10.650
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 03:49:13.558
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 03:56:57.242
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 03:56:57.588
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 03:56:58.822
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 03:57:01.729
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 03:57:56.937
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 03:57:57.175
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 2 16842768 2015-04-02 03:57:57.178
+!MESSAGE Poll Thread Aborted: null
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 03:57:58.406
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 03:58:01.315
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 04:01:08.780
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 04:01:09.027
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 04:01:10.255
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 04:01:13.162
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 04:02:48.719
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 04:02:49.252
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 04:02:50.486
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 04:02:53.393
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 04:03:41.083
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 04:03:41.670
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 04:03:42.903
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 04:03:45.912
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 04:05:31.488
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 04:05:31.985
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 04:05:33.218
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 04:05:36.233
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 04:07:34.975
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 04:07:35.530
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 04:07:36.764
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 04:07:39.672
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 04:11:35.213
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 04:11:35.491
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 04:11:36.745
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 04:11:39.654
+!MESSAGE Server Startup Succeeded
+!SESSION 
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 13:26:17.470
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 13:26:21.005
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 13:34:57.683
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 13:34:58.027
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 13:34:59.309
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 13:35:02.726
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 13:40:06.185
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 13:40:06.812
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 13:40:08.069
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 13:40:10.939
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 13:41:19.635
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 13:41:20.180
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 13:41:21.426
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 13:41:24.345
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-04-02 13:51:19.147
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-04-02 13:51:19.641
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 2 16842768 2015-04-02 13:51:19.655
+!MESSAGE Poll Thread Aborted: null
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 13:51:20.932
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 13:51:23.848
+!MESSAGE Server Startup Succeeded
+!SESSION 
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-04-02 14:08:09.653
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-04-02 14:08:12.773
+!MESSAGE Server Startup Succeeded

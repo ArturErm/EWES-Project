@@ -1,0 +1,5 @@
+package ee.iati.ewes.web.controller.tree;
+
+public class GroupNode extends NamedNode implements TreeNode{
+
+}

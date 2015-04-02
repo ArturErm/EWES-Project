@@ -1,0 +1,61 @@
+package ee.iati.ewes.dto;
+
+public class DTOGroupLink extends DTOBase{
+	private static final long serialVersionUID = 1L;
+	
+	public enum GROUP_LINK_TYPE 
+	{
+		ADMIN(0),
+		TEACHER(1),
+		STUDENT(2);
+		
+		private int linkType;
+		GROUP_LINK_TYPE(int linkType) { this.linkType = linkType; }
+		
+		int getId() { return linkType; }
+		String getString()
+		{
+			String ret;
+			switch(linkType)
+			{
+				case ADMIN:
+					ret = "admin";
+					break;
+				case TEACHER:
+					ret = "teacher";
+					break;
+				case STUDENT:
+					ret = "student";
+					break;
+			}
+			
+			return ret; 
+		}
+	}
+	
+	private Integer groupLinkId;
+	private Integer groupId;
+	private GROUP_LINK_TYPE linkType;
+	private Integer userId;
+	
+	public Integer getGroupLinkId() { return groupLinkId; }
+	public void setGroupLinkId(Integer groupLinkId) { this.groupLinkId = groupLinkId; }
+
+	public Integer getGroupId() { return groupId; }
+	public void setGroupId(Integer groupId) { this.groupId = groupId; }
+
+	public Integer getLinkType() { return linkType; }
+	public void setLinkType(Integer linkType) { this.linkType = linkType; }
+
+	public Integer getUserId() { return userId; }
+	public void setUserId(Integer userId) { this.userId = userId; }
+
+	public DTOGroupLink() { }
+	public DTOGroupLink(Integer groupLinkId, Integer groupId, Integer linkType, Integer userId) 
+	{ 
+		this.groupLinkId = groupLinkId;
+		this.groupId = groupId;
+		this.linkType = linkType;
+		this.userId = userId;
+	}
+}

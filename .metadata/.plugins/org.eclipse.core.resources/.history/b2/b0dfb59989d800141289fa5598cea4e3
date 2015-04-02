@@ -1,0 +1,35 @@
+package ee.iati.ewes.web.data;
+
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.event.Observes;
+import javax.enterprise.event.Reception;
+import javax.inject.Named;
+
+import ee.iati.ewes.dto.DTOUser;
+import ee.iati.ewes.ejb.ManagementBean;
+
+@RequestScoped
+public class MemberListProducer {
+
+	@EJB private ManagementBean mgtSvc;
+
+	private List<DTOUser> members;
+
+	@Named
+	public List<DTOUser> getMembers() {
+		return members;
+	}
+
+	public void onMemberListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final DTOUser member) {
+		retrieveAllMembersOrderedByName();
+	}
+
+	@PostConstruct
+	public void retrieveAllMembersOrderedByName() {
+		members = mgtSvc.queryUsers();
+	}
+}

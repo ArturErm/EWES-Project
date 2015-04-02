@@ -1,0 +1,158 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+/**
+ *
+ * @author Artur
+ */
+@Entity
+@Table(name = "ewes_users")
+@NamedQueries({
+		@NamedQuery(name = "EntityUser.findAll", query = "SELECT e FROM EntityUser e"),
+		@NamedQuery(name = "EntityUser.findByUserId", query = "SELECT e FROM EntityUser e WHERE e.userId = :userId"),
+		@NamedQuery(name = "EntityUser.findByFname", query = "SELECT e FROM EntityUser e WHERE e.fname = :fname"),
+		@NamedQuery(name = "EntityUser.findByLname", query = "SELECT e FROM EntityUser e WHERE e.lname = :lname"),
+		@NamedQuery(name = "EntityUser.findByPwd", query = "SELECT e FROM EntityUser e WHERE e.pwd = :pwd"),
+		@NamedQuery(name = "EntityUser.findByEmail", query = "SELECT e FROM EntityUser e WHERE e.email = :email"),
+		@NamedQuery(name = "EntityUser.findByIk", query = "SELECT e FROM EntityUser e WHERE e.ik = :ik") })
+public class EntityUser implements Serializable {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "USER_ID")
+	private Integer userId;
+	@Basic(optional = false)
+	@NotNull
+	@Size(min = 1, max = 64)
+	@Column(name = "FNAME")
+	private String fname;
+	@Basic(optional = false)
+	@NotNull
+	@Size(min = 1, max = 64)
+	@Column(name = "LNAME")
+	private String lname;
+	@Size(max = 16)
+	@Column(name = "PWD", columnDefinition="char(16)")
+	private String pwd;
+	@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email")
+	@Basic(optional = false)
+	@NotNull
+	@Size(min = 1, max = 128)
+	@Column(name = "EMAIL")
+	private String email;
+	@Basic(optional = false)
+	@NotNull
+	@Size(min = 1, max = 11)
+	@Column(name = "IK", columnDefinition="char(11)")
+	private String ik;
+
+	public EntityUser() {
+	}
+
+	public EntityUser(Integer userId) {
+		this.userId = userId;
+	}
+
+	public EntityUser(Integer userId, String fname, String lname, String email,
+			String ik) {
+		this.userId = userId;
+		this.fname = fname;
+		this.lname = lname;
+		this.email = email;
+		this.ik = ik;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public String getFname() {
+		return fname;
+	}
+
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+
+	public String getLname() {
+		return lname;
+	}
+
+	public void setLname(String lname) {
+		this.lname = lname;
+	}
+
+	public String getPwd() {
+		return pwd;
+	}
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getIk() {
+		return ik;
+	}
+
+	public void setIk(String ik) {
+		this.ik = ik;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (userId != null ? userId.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (!(object instanceof EntityUser)) {
+			return false;
+		}
+		EntityUser other = (EntityUser) object;
+		if ((this.userId == null && other.userId != null)
+				|| (this.userId != null && !this.userId.equals(other.userId))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ee.iati.ewes.dto.EwesUsers[ userId=" + userId + " ]";
+	}
+
+}

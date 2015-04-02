@@ -1,0 +1,12 @@
+package ee.iati.ewes.utils;
+
+public enum GROUP_LINK_TYPE {
+	ADMIN,
+	TEACHER,
+	STUDENT;
+	
+	private int linkType;
+	GROUP_LINK_TYPE(int linkType) { this.linkType = linkType; }
+	
+	int getId() { return linkType; }
+}

@@ -1,0 +1,12 @@
+package ee.iati.ewes.dto;
+
+import javax.annotation.Generated;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+
+@Generated(value="Dali", date="2015-03-28T21:53:49.569+0200")
+@StaticMetamodel(DTOTextResource.class)
+public class DTOTextResource_ {
+	public static volatile SingularAttribute<DTOTextResource, DTOTextResourcesPK> textResourcesPK;
+	public static volatile SingularAttribute<DTOTextResource, String> resourceText;
+}

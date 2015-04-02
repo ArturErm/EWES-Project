@@ -1,0 +1,23 @@
+package ee.iati.ewes.utils;
+
+public enum GROUP_LINK_TYPE {
+	ADMIN(0),
+	TEACHER(1),
+	STUDENT(2);
+	
+	private int linkType;
+	GROUP_LINK_TYPE(int linkType) { this.linkType = linkType; }
+	
+	public static GROUP_LINK_TYPE convert(int linkType)
+	{ 
+		GROUP_LINK_TYPE eRet;
+		for (GROUP_LINK_TYPE enumConst : GROUP_LINK_TYPE.values())
+		{
+			if (enumConst.ordinal() == linkType)
+			{
+				eRet = enumConst;
+			}
+		}
+		return eRet; 
+	}
+}

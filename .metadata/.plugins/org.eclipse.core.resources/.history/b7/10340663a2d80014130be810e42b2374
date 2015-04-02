@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+<!-- INTERFACE -->
+<composite:interface>
+	<composite:attribute name="addUserDialog" />
+</composite:interface>
+
+<!-- IMPLEMENTATION -->
+<composite:implementation>
+	<rich:popupPanel id="addUserDialog" modal="true" autosized="true"
+		resizeable="false" width="600">
+		<f:facet name="header">
+			<h:outputText value="Add user" />
+		</f:facet>
+		<f:facet name="controls">
+			<h:outputLink value="#"
+				onclick="#{rich:component('popup')}.hide(); return false;">X</h:outputLink>
+		</f:facet>
+		<h:panelGroup id="addUserForm">
+		</h:panelGroup>
+	</rich:popupPanel>
+</composite:implementation>
+</html>

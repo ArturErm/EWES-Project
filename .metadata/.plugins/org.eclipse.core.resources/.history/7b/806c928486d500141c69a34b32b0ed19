@@ -1,0 +1,248 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.dao;
+
+import ee.iati.ewes.dao.exceptions.NonexistentEntityException;
+import ee.iati.ewes.dao.exceptions.RollbackFailureException;
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import ee.iati.ewes.dto.DTOUser;
+import ee.iati.ewes.dto.DTOLinkType;
+import ee.iati.ewes.dto.DTOUserLink;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.transaction.UserTransaction;
+
+/**
+ *
+ * @author Artur
+ */
+public class UserLinksJpaController implements Serializable {
+
+    public UserLinksJpaController(UserTransaction utx, EntityManagerFactory emf) {
+        this.utx = utx;
+        this.emf = emf;
+    }
+    private UserTransaction utx = null;
+    private EntityManagerFactory emf = null;
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public void create(DTOUserLink userLinks) throws RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOUser childId = userLinks.getChildId();
+            if (childId != null) {
+                childId = em.getReference(childId.getClass(), childId.getUserId());
+                userLinks.setChildId(childId);
+            }
+            DTOLinkType linkTypeId = userLinks.getLinkTypeId();
+            if (linkTypeId != null) {
+                linkTypeId = em.getReference(linkTypeId.getClass(), linkTypeId.getLinkTypeId());
+                userLinks.setLinkTypeId(linkTypeId);
+            }
+            DTOUser masterId = userLinks.getMasterId();
+            if (masterId != null) {
+                masterId = em.getReference(masterId.getClass(), masterId.getUserId());
+                userLinks.setMasterId(masterId);
+            }
+            em.persist(userLinks);
+            if (childId != null) {
+                childId.getUserLinksList().add(userLinks);
+                childId = em.merge(childId);
+            }
+            if (linkTypeId != null) {
+                linkTypeId.getUserLinksList().add(userLinks);
+                linkTypeId = em.merge(linkTypeId);
+            }
+            if (masterId != null) {
+                masterId.getUserLinksList().add(userLinks);
+                masterId = em.merge(masterId);
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void edit(DTOUserLink userLinks) throws NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOUserLink persistentUserLinks = em.find(DTOUserLink.class, userLinks.getUserLinkId());
+            DTOUser childIdOld = persistentUserLinks.getChildId();
+            DTOUser childIdNew = userLinks.getChildId();
+            DTOLinkType linkTypeIdOld = persistentUserLinks.getLinkTypeId();
+            DTOLinkType linkTypeIdNew = userLinks.getLinkTypeId();
+            DTOUser masterIdOld = persistentUserLinks.getMasterId();
+            DTOUser masterIdNew = userLinks.getMasterId();
+            if (childIdNew != null) {
+                childIdNew = em.getReference(childIdNew.getClass(), childIdNew.getUserId());
+                userLinks.setChildId(childIdNew);
+            }
+            if (linkTypeIdNew != null) {
+                linkTypeIdNew = em.getReference(linkTypeIdNew.getClass(), linkTypeIdNew.getLinkTypeId());
+                userLinks.setLinkTypeId(linkTypeIdNew);
+            }
+            if (masterIdNew != null) {
+                masterIdNew = em.getReference(masterIdNew.getClass(), masterIdNew.getUserId());
+                userLinks.setMasterId(masterIdNew);
+            }
+            userLinks = em.merge(userLinks);
+            if (childIdOld != null && !childIdOld.equals(childIdNew)) {
+                childIdOld.getUserLinksList().remove(userLinks);
+                childIdOld = em.merge(childIdOld);
+            }
+            if (childIdNew != null && !childIdNew.equals(childIdOld)) {
+                childIdNew.getUserLinksList().add(userLinks);
+                childIdNew = em.merge(childIdNew);
+            }
+            if (linkTypeIdOld != null && !linkTypeIdOld.equals(linkTypeIdNew)) {
+                linkTypeIdOld.getUserLinksList().remove(userLinks);
+                linkTypeIdOld = em.merge(linkTypeIdOld);
+            }
+            if (linkTypeIdNew != null && !linkTypeIdNew.equals(linkTypeIdOld)) {
+                linkTypeIdNew.getUserLinksList().add(userLinks);
+                linkTypeIdNew = em.merge(linkTypeIdNew);
+            }
+            if (masterIdOld != null && !masterIdOld.equals(masterIdNew)) {
+                masterIdOld.getUserLinksList().remove(userLinks);
+                masterIdOld = em.merge(masterIdOld);
+            }
+            if (masterIdNew != null && !masterIdNew.equals(masterIdOld)) {
+                masterIdNew.getUserLinksList().add(userLinks);
+                masterIdNew = em.merge(masterIdNew);
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = userLinks.getUserLinkId();
+                if (findUserLinks(id) == null) {
+                    throw new NonexistentEntityException("The userLinks with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOUserLink userLinks;
+            try {
+                userLinks = em.getReference(DTOUserLink.class, id);
+                userLinks.getUserLinkId();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The userLinks with id " + id + " no longer exists.", enfe);
+            }
+            DTOUser childId = userLinks.getChildId();
+            if (childId != null) {
+                childId.getUserLinksList().remove(userLinks);
+                childId = em.merge(childId);
+            }
+            DTOLinkType linkTypeId = userLinks.getLinkTypeId();
+            if (linkTypeId != null) {
+                linkTypeId.getUserLinksList().remove(userLinks);
+                linkTypeId = em.merge(linkTypeId);
+            }
+            DTOUser masterId = userLinks.getMasterId();
+            if (masterId != null) {
+                masterId.getUserLinksList().remove(userLinks);
+                masterId = em.merge(masterId);
+            }
+            em.remove(userLinks);
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public List<DTOUserLink> findUserLinksEntities() {
+        return findUserLinksEntities(true, -1, -1);
+    }
+
+    public List<DTOUserLink> findUserLinksEntities(int maxResults, int firstResult) {
+        return findUserLinksEntities(false, maxResults, firstResult);
+    }
+
+    private List<DTOUserLink> findUserLinksEntities(boolean all, int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(DTOUserLink.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public DTOUserLink findUserLinks(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(DTOUserLink.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getUserLinksCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<DTOUserLink> rt = cq.from(DTOUserLink.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+}

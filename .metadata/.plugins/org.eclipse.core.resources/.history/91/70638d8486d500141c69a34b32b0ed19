@@ -1,0 +1,332 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.dao;
+
+import ee.iati.ewes.dao.exceptions.IllegalOrphanException;
+import ee.iati.ewes.dao.exceptions.NonexistentEntityException;
+import ee.iati.ewes.dao.exceptions.RollbackFailureException;
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import ee.iati.ewes.dto.DTOComponent;
+import ee.iati.ewes.dto.DTOUserLink;
+import java.util.ArrayList;
+import java.util.List;
+import ee.iati.ewes.dto.DTOGroupLink;
+import ee.iati.ewes.dto.DTOLinkType;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.transaction.UserTransaction;
+
+/**
+ *
+ * @author Artur
+ */
+public class LinkTypesJpaController implements Serializable {
+
+    public LinkTypesJpaController(UserTransaction utx, EntityManagerFactory emf) {
+        this.utx = utx;
+        this.emf = emf;
+    }
+    private UserTransaction utx = null;
+    private EntityManagerFactory emf = null;
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public void create(DTOLinkType linkTypes) throws IllegalOrphanException, RollbackFailureException, Exception {
+        if (linkTypes.getUserLinksList() == null) {
+            linkTypes.setUserLinksList(new ArrayList<DTOUserLink>());
+        }
+        if (linkTypes.getGroupLinksList() == null) {
+            linkTypes.setGroupLinksList(new ArrayList<DTOGroupLink>());
+        }
+        List<String> illegalOrphanMessages = null;
+        DTOComponent componentsOrphanCheck = linkTypes.getComponents();
+        if (componentsOrphanCheck != null) {
+            DTOLinkType oldLinkTypesOfComponents = componentsOrphanCheck.getLinkTypes();
+            if (oldLinkTypesOfComponents != null) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("The Components " + componentsOrphanCheck + " already has an item of type LinkTypes whose components column cannot be null. Please make another selection for the components field.");
+            }
+        }
+        if (illegalOrphanMessages != null) {
+            throw new IllegalOrphanException(illegalOrphanMessages);
+        }
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOComponent components = linkTypes.getComponents();
+            if (components != null) {
+                components = em.getReference(components.getClass(), components.getCompId());
+                linkTypes.setComponents(components);
+            }
+            List<DTOUserLink> attachedUserLinksList = new ArrayList<DTOUserLink>();
+            for (DTOUserLink userLinksListUserLinksToAttach : linkTypes.getUserLinksList()) {
+                userLinksListUserLinksToAttach = em.getReference(userLinksListUserLinksToAttach.getClass(), userLinksListUserLinksToAttach.getUserLinkId());
+                attachedUserLinksList.add(userLinksListUserLinksToAttach);
+            }
+            linkTypes.setUserLinksList(attachedUserLinksList);
+            List<DTOGroupLink> attachedGroupLinksList = new ArrayList<DTOGroupLink>();
+            for (DTOGroupLink groupLinksListGroupLinksToAttach : linkTypes.getGroupLinksList()) {
+                groupLinksListGroupLinksToAttach = em.getReference(groupLinksListGroupLinksToAttach.getClass(), groupLinksListGroupLinksToAttach.getGroupLinkId());
+                attachedGroupLinksList.add(groupLinksListGroupLinksToAttach);
+            }
+            linkTypes.setGroupLinksList(attachedGroupLinksList);
+            em.persist(linkTypes);
+            if (components != null) {
+                components.setLinkTypes(linkTypes);
+                components = em.merge(components);
+            }
+            for (DTOUserLink userLinksListUserLinks : linkTypes.getUserLinksList()) {
+                DTOLinkType oldLinkTypeIdOfUserLinksListUserLinks = userLinksListUserLinks.getLinkTypeId();
+                userLinksListUserLinks.setLinkTypeId(linkTypes);
+                userLinksListUserLinks = em.merge(userLinksListUserLinks);
+                if (oldLinkTypeIdOfUserLinksListUserLinks != null) {
+                    oldLinkTypeIdOfUserLinksListUserLinks.getUserLinksList().remove(userLinksListUserLinks);
+                    oldLinkTypeIdOfUserLinksListUserLinks = em.merge(oldLinkTypeIdOfUserLinksListUserLinks);
+                }
+            }
+            for (DTOGroupLink groupLinksListGroupLinks : linkTypes.getGroupLinksList()) {
+                DTOLinkType oldLinkTypeIdOfGroupLinksListGroupLinks = groupLinksListGroupLinks.getLinkTypeId();
+                groupLinksListGroupLinks.setLinkTypeId(linkTypes);
+                groupLinksListGroupLinks = em.merge(groupLinksListGroupLinks);
+                if (oldLinkTypeIdOfGroupLinksListGroupLinks != null) {
+                    oldLinkTypeIdOfGroupLinksListGroupLinks.getGroupLinksList().remove(groupLinksListGroupLinks);
+                    oldLinkTypeIdOfGroupLinksListGroupLinks = em.merge(oldLinkTypeIdOfGroupLinksListGroupLinks);
+                }
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void edit(DTOLinkType linkTypes) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOLinkType persistentLinkTypes = em.find(DTOLinkType.class, linkTypes.getLinkTypeId());
+            DTOComponent componentsOld = persistentLinkTypes.getComponents();
+            DTOComponent componentsNew = linkTypes.getComponents();
+            List<DTOUserLink> userLinksListOld = persistentLinkTypes.getUserLinksList();
+            List<DTOUserLink> userLinksListNew = linkTypes.getUserLinksList();
+            List<DTOGroupLink> groupLinksListOld = persistentLinkTypes.getGroupLinksList();
+            List<DTOGroupLink> groupLinksListNew = linkTypes.getGroupLinksList();
+            List<String> illegalOrphanMessages = null;
+            if (componentsNew != null && !componentsNew.equals(componentsOld)) {
+                DTOLinkType oldLinkTypesOfComponents = componentsNew.getLinkTypes();
+                if (oldLinkTypesOfComponents != null) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("The Components " + componentsNew + " already has an item of type LinkTypes whose components column cannot be null. Please make another selection for the components field.");
+                }
+            }
+            for (DTOUserLink userLinksListOldUserLinks : userLinksListOld) {
+                if (!userLinksListNew.contains(userLinksListOldUserLinks)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain UserLinks " + userLinksListOldUserLinks + " since its linkTypeId field is not nullable.");
+                }
+            }
+            for (DTOGroupLink groupLinksListOldGroupLinks : groupLinksListOld) {
+                if (!groupLinksListNew.contains(groupLinksListOldGroupLinks)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain GroupLinks " + groupLinksListOldGroupLinks + " since its linkTypeId field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            if (componentsNew != null) {
+                componentsNew = em.getReference(componentsNew.getClass(), componentsNew.getCompId());
+                linkTypes.setComponents(componentsNew);
+            }
+            List<DTOUserLink> attachedUserLinksListNew = new ArrayList<DTOUserLink>();
+            for (DTOUserLink userLinksListNewUserLinksToAttach : userLinksListNew) {
+                userLinksListNewUserLinksToAttach = em.getReference(userLinksListNewUserLinksToAttach.getClass(), userLinksListNewUserLinksToAttach.getUserLinkId());
+                attachedUserLinksListNew.add(userLinksListNewUserLinksToAttach);
+            }
+            userLinksListNew = attachedUserLinksListNew;
+            linkTypes.setUserLinksList(userLinksListNew);
+            List<DTOGroupLink> attachedGroupLinksListNew = new ArrayList<DTOGroupLink>();
+            for (DTOGroupLink groupLinksListNewGroupLinksToAttach : groupLinksListNew) {
+                groupLinksListNewGroupLinksToAttach = em.getReference(groupLinksListNewGroupLinksToAttach.getClass(), groupLinksListNewGroupLinksToAttach.getGroupLinkId());
+                attachedGroupLinksListNew.add(groupLinksListNewGroupLinksToAttach);
+            }
+            groupLinksListNew = attachedGroupLinksListNew;
+            linkTypes.setGroupLinksList(groupLinksListNew);
+            linkTypes = em.merge(linkTypes);
+            if (componentsOld != null && !componentsOld.equals(componentsNew)) {
+                componentsOld.setLinkTypes(null);
+                componentsOld = em.merge(componentsOld);
+            }
+            if (componentsNew != null && !componentsNew.equals(componentsOld)) {
+                componentsNew.setLinkTypes(linkTypes);
+                componentsNew = em.merge(componentsNew);
+            }
+            for (DTOUserLink userLinksListNewUserLinks : userLinksListNew) {
+                if (!userLinksListOld.contains(userLinksListNewUserLinks)) {
+                    DTOLinkType oldLinkTypeIdOfUserLinksListNewUserLinks = userLinksListNewUserLinks.getLinkTypeId();
+                    userLinksListNewUserLinks.setLinkTypeId(linkTypes);
+                    userLinksListNewUserLinks = em.merge(userLinksListNewUserLinks);
+                    if (oldLinkTypeIdOfUserLinksListNewUserLinks != null && !oldLinkTypeIdOfUserLinksListNewUserLinks.equals(linkTypes)) {
+                        oldLinkTypeIdOfUserLinksListNewUserLinks.getUserLinksList().remove(userLinksListNewUserLinks);
+                        oldLinkTypeIdOfUserLinksListNewUserLinks = em.merge(oldLinkTypeIdOfUserLinksListNewUserLinks);
+                    }
+                }
+            }
+            for (DTOGroupLink groupLinksListNewGroupLinks : groupLinksListNew) {
+                if (!groupLinksListOld.contains(groupLinksListNewGroupLinks)) {
+                    DTOLinkType oldLinkTypeIdOfGroupLinksListNewGroupLinks = groupLinksListNewGroupLinks.getLinkTypeId();
+                    groupLinksListNewGroupLinks.setLinkTypeId(linkTypes);
+                    groupLinksListNewGroupLinks = em.merge(groupLinksListNewGroupLinks);
+                    if (oldLinkTypeIdOfGroupLinksListNewGroupLinks != null && !oldLinkTypeIdOfGroupLinksListNewGroupLinks.equals(linkTypes)) {
+                        oldLinkTypeIdOfGroupLinksListNewGroupLinks.getGroupLinksList().remove(groupLinksListNewGroupLinks);
+                        oldLinkTypeIdOfGroupLinksListNewGroupLinks = em.merge(oldLinkTypeIdOfGroupLinksListNewGroupLinks);
+                    }
+                }
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = linkTypes.getLinkTypeId();
+                if (findLinkTypes(id) == null) {
+                    throw new NonexistentEntityException("The linkTypes with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOLinkType linkTypes;
+            try {
+                linkTypes = em.getReference(DTOLinkType.class, id);
+                linkTypes.getLinkTypeId();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The linkTypes with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<DTOUserLink> userLinksListOrphanCheck = linkTypes.getUserLinksList();
+            for (DTOUserLink userLinksListOrphanCheckUserLinks : userLinksListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This LinkTypes (" + linkTypes + ") cannot be destroyed since the UserLinks " + userLinksListOrphanCheckUserLinks + " in its userLinksList field has a non-nullable linkTypeId field.");
+            }
+            List<DTOGroupLink> groupLinksListOrphanCheck = linkTypes.getGroupLinksList();
+            for (DTOGroupLink groupLinksListOrphanCheckGroupLinks : groupLinksListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This LinkTypes (" + linkTypes + ") cannot be destroyed since the GroupLinks " + groupLinksListOrphanCheckGroupLinks + " in its groupLinksList field has a non-nullable linkTypeId field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            DTOComponent components = linkTypes.getComponents();
+            if (components != null) {
+                components.setLinkTypes(null);
+                components = em.merge(components);
+            }
+            em.remove(linkTypes);
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public List<DTOLinkType> findLinkTypesEntities() {
+        return findLinkTypesEntities(true, -1, -1);
+    }
+
+    public List<DTOLinkType> findLinkTypesEntities(int maxResults, int firstResult) {
+        return findLinkTypesEntities(false, maxResults, firstResult);
+    }
+
+    private List<DTOLinkType> findLinkTypesEntities(boolean all, int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(DTOLinkType.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public DTOLinkType findLinkTypes(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(DTOLinkType.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getLinkTypesCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<DTOLinkType> rt = cq.from(DTOLinkType.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+}

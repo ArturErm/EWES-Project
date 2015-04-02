@@ -1,0 +1,249 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.dao;
+
+import ee.iati.ewes.dao.exceptions.NonexistentEntityException;
+import ee.iati.ewes.dao.exceptions.RollbackFailureException;
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import ee.iati.ewes.dto.DTOGroup;
+import ee.iati.ewes.dto.DTOLinkType;
+import ee.iati.ewes.dto.DTOUser;
+import ee.iati.ewes.dto.DTOGroupLink;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.transaction.UserTransaction;
+
+/**
+ *
+ * @author Artur
+ */
+public class GroupLinksJpaController implements Serializable {
+
+    public GroupLinksJpaController(UserTransaction utx, EntityManagerFactory emf) {
+        this.utx = utx;
+        this.emf = emf;
+    }
+    private UserTransaction utx = null;
+    private EntityManagerFactory emf = null;
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public void create(DTOGroupLink groupLinks) throws RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOGroup groupId = groupLinks.getGroupId();
+            if (groupId != null) {
+                groupId = em.getReference(groupId.getClass(), groupId.getGroupId());
+                groupLinks.setGroupId(groupId);
+            }
+            DTOLinkType linkTypeId = groupLinks.getLinkTypeId();
+            if (linkTypeId != null) {
+                linkTypeId = em.getReference(linkTypeId.getClass(), linkTypeId.getLinkTypeId());
+                groupLinks.setLinkTypeId(linkTypeId);
+            }
+            DTOUser userId = groupLinks.getUserId();
+            if (userId != null) {
+                userId = em.getReference(userId.getClass(), userId.getUserId());
+                groupLinks.setUserId(userId);
+            }
+            em.persist(groupLinks);
+            if (groupId != null) {
+                groupId.getGroupLinksList().add(groupLinks);
+                groupId = em.merge(groupId);
+            }
+            if (linkTypeId != null) {
+                linkTypeId.getGroupLinksList().add(groupLinks);
+                linkTypeId = em.merge(linkTypeId);
+            }
+            if (userId != null) {
+                userId.getGroupLinksList().add(groupLinks);
+                userId = em.merge(userId);
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void edit(DTOGroupLink groupLinks) throws NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOGroupLink persistentGroupLinks = em.find(DTOGroupLink.class, groupLinks.getGroupLinkId());
+            DTOGroup groupIdOld = persistentGroupLinks.getGroupId();
+            DTOGroup groupIdNew = groupLinks.getGroupId();
+            DTOLinkType linkTypeIdOld = persistentGroupLinks.getLinkTypeId();
+            DTOLinkType linkTypeIdNew = groupLinks.getLinkTypeId();
+            DTOUser userIdOld = persistentGroupLinks.getUserId();
+            DTOUser userIdNew = groupLinks.getUserId();
+            if (groupIdNew != null) {
+                groupIdNew = em.getReference(groupIdNew.getClass(), groupIdNew.getGroupId());
+                groupLinks.setGroupId(groupIdNew);
+            }
+            if (linkTypeIdNew != null) {
+                linkTypeIdNew = em.getReference(linkTypeIdNew.getClass(), linkTypeIdNew.getLinkTypeId());
+                groupLinks.setLinkTypeId(linkTypeIdNew);
+            }
+            if (userIdNew != null) {
+                userIdNew = em.getReference(userIdNew.getClass(), userIdNew.getUserId());
+                groupLinks.setUserId(userIdNew);
+            }
+            groupLinks = em.merge(groupLinks);
+            if (groupIdOld != null && !groupIdOld.equals(groupIdNew)) {
+                groupIdOld.getGroupLinksList().remove(groupLinks);
+                groupIdOld = em.merge(groupIdOld);
+            }
+            if (groupIdNew != null && !groupIdNew.equals(groupIdOld)) {
+                groupIdNew.getGroupLinksList().add(groupLinks);
+                groupIdNew = em.merge(groupIdNew);
+            }
+            if (linkTypeIdOld != null && !linkTypeIdOld.equals(linkTypeIdNew)) {
+                linkTypeIdOld.getGroupLinksList().remove(groupLinks);
+                linkTypeIdOld = em.merge(linkTypeIdOld);
+            }
+            if (linkTypeIdNew != null && !linkTypeIdNew.equals(linkTypeIdOld)) {
+                linkTypeIdNew.getGroupLinksList().add(groupLinks);
+                linkTypeIdNew = em.merge(linkTypeIdNew);
+            }
+            if (userIdOld != null && !userIdOld.equals(userIdNew)) {
+                userIdOld.getGroupLinksList().remove(groupLinks);
+                userIdOld = em.merge(userIdOld);
+            }
+            if (userIdNew != null && !userIdNew.equals(userIdOld)) {
+                userIdNew.getGroupLinksList().add(groupLinks);
+                userIdNew = em.merge(userIdNew);
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = groupLinks.getGroupLinkId();
+                if (findGroupLinks(id) == null) {
+                    throw new NonexistentEntityException("The groupLinks with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOGroupLink groupLinks;
+            try {
+                groupLinks = em.getReference(DTOGroupLink.class, id);
+                groupLinks.getGroupLinkId();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The groupLinks with id " + id + " no longer exists.", enfe);
+            }
+            DTOGroup groupId = groupLinks.getGroupId();
+            if (groupId != null) {
+                groupId.getGroupLinksList().remove(groupLinks);
+                groupId = em.merge(groupId);
+            }
+            DTOLinkType linkTypeId = groupLinks.getLinkTypeId();
+            if (linkTypeId != null) {
+                linkTypeId.getGroupLinksList().remove(groupLinks);
+                linkTypeId = em.merge(linkTypeId);
+            }
+            DTOUser userId = groupLinks.getUserId();
+            if (userId != null) {
+                userId.getGroupLinksList().remove(groupLinks);
+                userId = em.merge(userId);
+            }
+            em.remove(groupLinks);
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public List<DTOGroupLink> findGroupLinksEntities() {
+        return findGroupLinksEntities(true, -1, -1);
+    }
+
+    public List<DTOGroupLink> findGroupLinksEntities(int maxResults, int firstResult) {
+        return findGroupLinksEntities(false, maxResults, firstResult);
+    }
+
+    private List<DTOGroupLink> findGroupLinksEntities(boolean all, int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(DTOGroupLink.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public DTOGroupLink findGroupLinks(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(DTOGroupLink.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getGroupLinksCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<DTOGroupLink> rt = cq.from(DTOGroupLink.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+}

@@ -1,0 +1,16 @@
+package ee.iati.ewes.dto;
+
+import java.util.Date;
+import javax.annotation.Generated;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+
+@Generated(value="Dali", date="2015-03-29T14:43:46.260+0300")
+@StaticMetamodel(DTOTask.class)
+public class DTOTask_ {
+	public static volatile SingularAttribute<DTOTask, Integer> taskId;
+	public static volatile SingularAttribute<DTOTask, String> descr;
+	public static volatile SingularAttribute<DTOTask, Date> startDate;
+	public static volatile SingularAttribute<DTOTask, Date> endDate;
+	public static volatile SingularAttribute<DTOTask, DTOSubject> assignedSubjectId;
+}

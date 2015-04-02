@@ -1,0 +1,363 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.dao;
+
+import ee.iati.ewes.dao.exceptions.IllegalOrphanException;
+import ee.iati.ewes.dao.exceptions.NonexistentEntityException;
+import ee.iati.ewes.dao.exceptions.RollbackFailureException;
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import ee.iati.ewes.dto.DTOGroup;
+import ee.iati.ewes.dto.DTOSubjectDescription;
+import ee.iati.ewes.dto.DTOUser;
+import ee.iati.ewes.dto.DTOAccessRule;
+import ee.iati.ewes.dto.DTOSubject;
+import java.util.ArrayList;
+import java.util.List;
+import ee.iati.ewes.dto.DTOTask;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.transaction.UserTransaction;
+
+/**
+ *
+ * @author Artur
+ */
+public class AssignedSubjectsJpaController implements Serializable {
+
+    public AssignedSubjectsJpaController(UserTransaction utx, EntityManagerFactory emf) {
+        this.utx = utx;
+        this.emf = emf;
+    }
+    private UserTransaction utx = null;
+    private EntityManagerFactory emf = null;
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public void create(DTOSubject assignedSubjects) throws RollbackFailureException, Exception {
+        if (assignedSubjects.getAclList() == null) {
+            assignedSubjects.setAclList(new ArrayList<DTOAccessRule>());
+        }
+        if (assignedSubjects.getTasksList() == null) {
+            assignedSubjects.setTasksList(new ArrayList<DTOTask>());
+        }
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOGroup groupId = assignedSubjects.getGroupId();
+            if (groupId != null) {
+                groupId = em.getReference(groupId.getClass(), groupId.getGroupId());
+                assignedSubjects.setGroupId(groupId);
+            }
+            DTOSubjectDescription subjectId = assignedSubjects.getSubjectId();
+            if (subjectId != null) {
+                subjectId = em.getReference(subjectId.getClass(), subjectId.getSubjectId());
+                assignedSubjects.setSubjectId(subjectId);
+            }
+            DTOUser teacherId = assignedSubjects.getTeacherId();
+            if (teacherId != null) {
+                teacherId = em.getReference(teacherId.getClass(), teacherId.getUserId());
+                assignedSubjects.setTeacherId(teacherId);
+            }
+            List<DTOAccessRule> attachedAclList = new ArrayList<DTOAccessRule>();
+            for (DTOAccessRule aclListAclToAttach : assignedSubjects.getAclList()) {
+                aclListAclToAttach = em.getReference(aclListAclToAttach.getClass(), aclListAclToAttach.getAclId());
+                attachedAclList.add(aclListAclToAttach);
+            }
+            assignedSubjects.setAclList(attachedAclList);
+            List<DTOTask> attachedTasksList = new ArrayList<DTOTask>();
+            for (DTOTask tasksListTasksToAttach : assignedSubjects.getTasksList()) {
+                tasksListTasksToAttach = em.getReference(tasksListTasksToAttach.getClass(), tasksListTasksToAttach.getTaskId());
+                attachedTasksList.add(tasksListTasksToAttach);
+            }
+            assignedSubjects.setTasksList(attachedTasksList);
+            em.persist(assignedSubjects);
+            if (groupId != null) {
+                groupId.getAssignedSubjectsList().add(assignedSubjects);
+                groupId = em.merge(groupId);
+            }
+            if (subjectId != null) {
+                subjectId.getAssignedSubjectsList().add(assignedSubjects);
+                subjectId = em.merge(subjectId);
+            }
+            if (teacherId != null) {
+                teacherId.getAssignedSubjectsList().add(assignedSubjects);
+                teacherId = em.merge(teacherId);
+            }
+            for (DTOAccessRule aclListAcl : assignedSubjects.getAclList()) {
+                DTOSubject oldAssignedSubjectIdOfAclListAcl = aclListAcl.getAssignedSubjectId();
+                aclListAcl.setAssignedSubjectId(assignedSubjects);
+                aclListAcl = em.merge(aclListAcl);
+                if (oldAssignedSubjectIdOfAclListAcl != null) {
+                    oldAssignedSubjectIdOfAclListAcl.getAclList().remove(aclListAcl);
+                    oldAssignedSubjectIdOfAclListAcl = em.merge(oldAssignedSubjectIdOfAclListAcl);
+                }
+            }
+            for (DTOTask tasksListTasks : assignedSubjects.getTasksList()) {
+                DTOSubject oldAssignedSubjectIdOfTasksListTasks = tasksListTasks.getAssignedSubjectId();
+                tasksListTasks.setAssignedSubjectId(assignedSubjects);
+                tasksListTasks = em.merge(tasksListTasks);
+                if (oldAssignedSubjectIdOfTasksListTasks != null) {
+                    oldAssignedSubjectIdOfTasksListTasks.getTasksList().remove(tasksListTasks);
+                    oldAssignedSubjectIdOfTasksListTasks = em.merge(oldAssignedSubjectIdOfTasksListTasks);
+                }
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void edit(DTOSubject assignedSubjects) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOSubject persistentAssignedSubjects = em.find(DTOSubject.class, assignedSubjects.getAssignedSubjectId());
+            DTOGroup groupIdOld = persistentAssignedSubjects.getGroupId();
+            DTOGroup groupIdNew = assignedSubjects.getGroupId();
+            DTOSubjectDescription subjectIdOld = persistentAssignedSubjects.getSubjectId();
+            DTOSubjectDescription subjectIdNew = assignedSubjects.getSubjectId();
+            DTOUser teacherIdOld = persistentAssignedSubjects.getTeacherId();
+            DTOUser teacherIdNew = assignedSubjects.getTeacherId();
+            List<DTOAccessRule> aclListOld = persistentAssignedSubjects.getAclList();
+            List<DTOAccessRule> aclListNew = assignedSubjects.getAclList();
+            List<DTOTask> tasksListOld = persistentAssignedSubjects.getTasksList();
+            List<DTOTask> tasksListNew = assignedSubjects.getTasksList();
+            List<String> illegalOrphanMessages = null;
+            for (DTOTask tasksListOldTasks : tasksListOld) {
+                if (!tasksListNew.contains(tasksListOldTasks)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Tasks " + tasksListOldTasks + " since its assignedSubjectId field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            if (groupIdNew != null) {
+                groupIdNew = em.getReference(groupIdNew.getClass(), groupIdNew.getGroupId());
+                assignedSubjects.setGroupId(groupIdNew);
+            }
+            if (subjectIdNew != null) {
+                subjectIdNew = em.getReference(subjectIdNew.getClass(), subjectIdNew.getSubjectId());
+                assignedSubjects.setSubjectId(subjectIdNew);
+            }
+            if (teacherIdNew != null) {
+                teacherIdNew = em.getReference(teacherIdNew.getClass(), teacherIdNew.getUserId());
+                assignedSubjects.setTeacherId(teacherIdNew);
+            }
+            List<DTOAccessRule> attachedAclListNew = new ArrayList<DTOAccessRule>();
+            for (DTOAccessRule aclListNewAclToAttach : aclListNew) {
+                aclListNewAclToAttach = em.getReference(aclListNewAclToAttach.getClass(), aclListNewAclToAttach.getAclId());
+                attachedAclListNew.add(aclListNewAclToAttach);
+            }
+            aclListNew = attachedAclListNew;
+            assignedSubjects.setAclList(aclListNew);
+            List<DTOTask> attachedTasksListNew = new ArrayList<DTOTask>();
+            for (DTOTask tasksListNewTasksToAttach : tasksListNew) {
+                tasksListNewTasksToAttach = em.getReference(tasksListNewTasksToAttach.getClass(), tasksListNewTasksToAttach.getTaskId());
+                attachedTasksListNew.add(tasksListNewTasksToAttach);
+            }
+            tasksListNew = attachedTasksListNew;
+            assignedSubjects.setTasksList(tasksListNew);
+            assignedSubjects = em.merge(assignedSubjects);
+            if (groupIdOld != null && !groupIdOld.equals(groupIdNew)) {
+                groupIdOld.getAssignedSubjectsList().remove(assignedSubjects);
+                groupIdOld = em.merge(groupIdOld);
+            }
+            if (groupIdNew != null && !groupIdNew.equals(groupIdOld)) {
+                groupIdNew.getAssignedSubjectsList().add(assignedSubjects);
+                groupIdNew = em.merge(groupIdNew);
+            }
+            if (subjectIdOld != null && !subjectIdOld.equals(subjectIdNew)) {
+                subjectIdOld.getAssignedSubjectsList().remove(assignedSubjects);
+                subjectIdOld = em.merge(subjectIdOld);
+            }
+            if (subjectIdNew != null && !subjectIdNew.equals(subjectIdOld)) {
+                subjectIdNew.getAssignedSubjectsList().add(assignedSubjects);
+                subjectIdNew = em.merge(subjectIdNew);
+            }
+            if (teacherIdOld != null && !teacherIdOld.equals(teacherIdNew)) {
+                teacherIdOld.getAssignedSubjectsList().remove(assignedSubjects);
+                teacherIdOld = em.merge(teacherIdOld);
+            }
+            if (teacherIdNew != null && !teacherIdNew.equals(teacherIdOld)) {
+                teacherIdNew.getAssignedSubjectsList().add(assignedSubjects);
+                teacherIdNew = em.merge(teacherIdNew);
+            }
+            for (DTOAccessRule aclListOldAcl : aclListOld) {
+                if (!aclListNew.contains(aclListOldAcl)) {
+                    aclListOldAcl.setAssignedSubjectId(null);
+                    aclListOldAcl = em.merge(aclListOldAcl);
+                }
+            }
+            for (DTOAccessRule aclListNewAcl : aclListNew) {
+                if (!aclListOld.contains(aclListNewAcl)) {
+                    DTOSubject oldAssignedSubjectIdOfAclListNewAcl = aclListNewAcl.getAssignedSubjectId();
+                    aclListNewAcl.setAssignedSubjectId(assignedSubjects);
+                    aclListNewAcl = em.merge(aclListNewAcl);
+                    if (oldAssignedSubjectIdOfAclListNewAcl != null && !oldAssignedSubjectIdOfAclListNewAcl.equals(assignedSubjects)) {
+                        oldAssignedSubjectIdOfAclListNewAcl.getAclList().remove(aclListNewAcl);
+                        oldAssignedSubjectIdOfAclListNewAcl = em.merge(oldAssignedSubjectIdOfAclListNewAcl);
+                    }
+                }
+            }
+            for (DTOTask tasksListNewTasks : tasksListNew) {
+                if (!tasksListOld.contains(tasksListNewTasks)) {
+                    DTOSubject oldAssignedSubjectIdOfTasksListNewTasks = tasksListNewTasks.getAssignedSubjectId();
+                    tasksListNewTasks.setAssignedSubjectId(assignedSubjects);
+                    tasksListNewTasks = em.merge(tasksListNewTasks);
+                    if (oldAssignedSubjectIdOfTasksListNewTasks != null && !oldAssignedSubjectIdOfTasksListNewTasks.equals(assignedSubjects)) {
+                        oldAssignedSubjectIdOfTasksListNewTasks.getTasksList().remove(tasksListNewTasks);
+                        oldAssignedSubjectIdOfTasksListNewTasks = em.merge(oldAssignedSubjectIdOfTasksListNewTasks);
+                    }
+                }
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = assignedSubjects.getAssignedSubjectId();
+                if (findAssignedSubjects(id) == null) {
+                    throw new NonexistentEntityException("The assignedSubjects with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOSubject assignedSubjects;
+            try {
+                assignedSubjects = em.getReference(DTOSubject.class, id);
+                assignedSubjects.getAssignedSubjectId();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The assignedSubjects with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<DTOTask> tasksListOrphanCheck = assignedSubjects.getTasksList();
+            for (DTOTask tasksListOrphanCheckTasks : tasksListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This AssignedSubjects (" + assignedSubjects + ") cannot be destroyed since the Tasks " + tasksListOrphanCheckTasks + " in its tasksList field has a non-nullable assignedSubjectId field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            DTOGroup groupId = assignedSubjects.getGroupId();
+            if (groupId != null) {
+                groupId.getAssignedSubjectsList().remove(assignedSubjects);
+                groupId = em.merge(groupId);
+            }
+            DTOSubjectDescription subjectId = assignedSubjects.getSubjectId();
+            if (subjectId != null) {
+                subjectId.getAssignedSubjectsList().remove(assignedSubjects);
+                subjectId = em.merge(subjectId);
+            }
+            DTOUser teacherId = assignedSubjects.getTeacherId();
+            if (teacherId != null) {
+                teacherId.getAssignedSubjectsList().remove(assignedSubjects);
+                teacherId = em.merge(teacherId);
+            }
+            List<DTOAccessRule> aclList = assignedSubjects.getAclList();
+            for (DTOAccessRule aclListAcl : aclList) {
+                aclListAcl.setAssignedSubjectId(null);
+                aclListAcl = em.merge(aclListAcl);
+            }
+            em.remove(assignedSubjects);
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public List<DTOSubject> findAssignedSubjectsEntities() {
+        return findAssignedSubjectsEntities(true, -1, -1);
+    }
+
+    public List<DTOSubject> findAssignedSubjectsEntities(int maxResults, int firstResult) {
+        return findAssignedSubjectsEntities(false, maxResults, firstResult);
+    }
+
+    private List<DTOSubject> findAssignedSubjectsEntities(boolean all, int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(DTOSubject.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public DTOSubject findAssignedSubjects(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(DTOSubject.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getAssignedSubjectsCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<DTOSubject> rt = cq.from(DTOSubject.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+}

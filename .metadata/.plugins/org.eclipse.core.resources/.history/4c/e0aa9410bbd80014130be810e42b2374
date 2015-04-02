@@ -1,0 +1,32 @@
+package ee.iati.ewes.web.beans;
+
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.enterprise.inject.Model;
+import javax.inject.Inject;
+
+import ee.iati.ewes.dto.DTOUser;
+
+@Model
+public class UserBean implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Inject protected Logger log;
+	
+	private DTOUser user;
+
+	public DTOUser getUser() { return user; }
+	public void setUser(DTOUser user) { this.user = user; }
+	
+	public void init()
+	{
+		log.log(Level.INFO, "UserBean initialized");
+	}
+	
+	public void createUser()
+	{
+		log.log(Level.INFO, user.toString());
+	}
+}

@@ -1,0 +1,10 @@
+package ee.iati.ewes.dto.converters;
+
+import ee.iati.ewes.utils.DTOBase;
+
+public class EntotyDTOConverter {
+	public static <? extends DTOBase> entityToDTO(T entity)
+	{
+		
+	}
+}

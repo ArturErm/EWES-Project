@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="ewes">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="ewesEJB.jar" deploy-path="/" handle="module:/resource/ewesEJB/ewesEJB">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ewesEJBClient.jar" deploy-path="/" handle="module:/resource/ewesEJBClient/ewesEJBClient">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ewesUtils.jar" deploy-path="/lib" handle="module:/resource/ewesUtils/ewesUtils">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ewesWebModule.war" deploy-path="/" handle="module:/resource/ewesWebModule/ewesWebModule">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>

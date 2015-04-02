@@ -1,0 +1,17 @@
+package ee.iati.ewes.entity;
+
+import java.util.Date;
+import javax.annotation.Generated;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+
+@Generated(value="Dali", date="2015-03-29T14:43:46.252+0300")
+@StaticMetamodel(DTONotification.class)
+public class DTONotification_ {
+	public static volatile SingularAttribute<DTONotification, Integer> notificationId;
+	public static volatile SingularAttribute<DTONotification, String> title;
+	public static volatile SingularAttribute<DTONotification, String> content;
+	public static volatile SingularAttribute<DTONotification, Date> creationDate;
+	public static volatile SingularAttribute<DTONotification, DTOUser> recieverId;
+	public static volatile SingularAttribute<DTONotification, DTOUser> senderId;
+}

@@ -1,0 +1,87 @@
+package ee.iati.ewes.dto;
+
+public class DTOGroupLink extends DTOBase{
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "GROUP_LINK_ID")
+	private Integer groupLinkId;
+	@Column(name = "GROUP_ID")
+	@Basic(optional = false)
+	private Integer groupId;
+	@Column(name = "LINK_TYPE_ID")
+	@Basic(optional = false)
+	private Integer linkTypeId;
+	@Column(name = "USER_ID")
+	@Basic(optional = false)
+	private Integer userId;
+
+	public EntityGroupLink() {
+	}
+
+	public EntityGroupLink(Integer groupLinkId) {
+		this.groupLinkId = groupLinkId;
+	}
+
+	public Integer getGroupLinkId() {
+		return groupLinkId;
+	}
+
+	public void setGroupLinkId(Integer groupLinkId) {
+		this.groupLinkId = groupLinkId;
+	}
+
+	public Integer getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(Integer groupId) {
+		this.groupId = groupId;
+	}
+
+	public Integer getLinkTypeId() {
+		return linkTypeId;
+	}
+
+	public void setLinkTypeId(Integer linkTypeId) {
+		this.linkTypeId = linkTypeId;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (groupLinkId != null ? groupLinkId.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof EntityGroupLink)) {
+			return false;
+		}
+		EntityGroupLink other = (EntityGroupLink) object;
+		if ((this.groupLinkId == null && other.groupLinkId != null)
+				|| (this.groupLinkId != null && !this.groupLinkId
+						.equals(other.groupLinkId))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ee.iati.ewes.dto.GroupLinks[ groupLinkId=" + groupLinkId + " ]";
+	}
+
+}

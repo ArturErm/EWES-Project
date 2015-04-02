@@ -1,0 +1,39 @@
+1427567381337	Move 'hibernate.cfg.xml' to 'META-INF'
+1427567384007	Move 'MySQL_local-ds.xml' to 'META-INF'
+1427567438347	Delete element
+1427567611465	Move 'mysql-connector-java-5.1.35-bin.jar' to 'META-INF'
+1427567723743	Move 'mysql-connector-java-5.1.35-bin.jar' to 'ewesEJB'
+1427567727424	Move 'mysql-connector-java-5.1.35-bin.jar' to 'build'
+1427569847848	Rename resource 'NewFile.xml'
+1427572621233	Delete element
+1427573445479	Delete elements
+1427573455348	Delete elements
+1427573460350	Delete element
+1427573472451	Delete element
+1427574545618	Delete element
+1427630515823	Delete element
+1427631671794	Rename local variable 'cq'
+1427631689338	Rename local variable 'pet'
+1427631894943	Move package
+1427632181028	Move package
+1427633233811	Move package
+1427633358150	Move package
+1427633734553	Move package
+1427633821551	Copy package
+1427633868991	Delete element
+1427635061071	Copy file
+1427639243121	Rename package 'ee.iati.ewes.dto'
+1427639268371	Rename type 'DTOAccessRight'
+1427639276089	Rename type 'DTOAccessRule'
+1427639292068	Rename type 'DTOComponent'
+1427639310486	Rename type 'DTOGroup'
+1427639319808	Rename type 'DTOGroupLink'
+1427639330701	Rename type 'DTOLinkType'
+1427639351073	Rename type 'DTONotification'
+1427639365389	Rename type 'DTOSubject'
+1427639376506	Rename type 'DTOSubjectDescription'
+1427639384295	Rename type 'DTOTask'
+1427639393963	Rename type 'DTOTextResource'
+1427639401958	Rename type 'DTOTextResourcesPK'
+1427639410495	Rename type 'DTOUser'
+1427639418888	Rename type 'DTOUserLink'

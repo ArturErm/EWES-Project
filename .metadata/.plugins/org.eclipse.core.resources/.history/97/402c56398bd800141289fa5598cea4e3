@@ -1,0 +1,130 @@
+package ee.iati.ewes.web.controller;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.view.AttachedObjectHandler;
+import javax.inject.Inject;
+import javax.swing.tree.TreeNode;
+
+import org.richfaces.component.AbstractTree;
+import org.richfaces.event.TreeSelectionChangeEvent;
+
+import ee.iati.ewes.dto.DTOGroup;
+import ee.iati.ewes.dto.DTOGroupLink;
+import ee.iati.ewes.dto.DTOUser;
+import ee.iati.ewes.ejb.ManagementBean;
+import ee.iati.ewes.web.controller.tree.GroupNode;
+import ee.iati.ewes.web.controller.tree.NamedNodeWithKey;
+import ee.iati.ewes.web.controller.tree.UserNode;
+
+@ManagedBean
+@ViewScoped
+public class TreeBean implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	@EJB protected ManagementBean mgtSvc;
+	@Inject protected Logger log;
+	
+	private List<NamedNodeWithKey> rootNodes = new ArrayList<NamedNodeWithKey>();
+	private TreeNode currentSelection = null;
+	
+	private Map<Integer, GroupNode> cacheGroupNodes = new HashMap<Integer, GroupNode>();
+	private Map<Integer, DTOGroup> mapDTOGroup;
+	private Map<Integer, DTOUser> mapDTOUsers;
+	private Map<Integer, List<DTOGroupLink>> mapDTOGroupLinks;
+	
+	public List<NamedNodeWithKey> getRootNodes()				{ return rootNodes; }
+	public void setRootNodes(List<NamedNodeWithKey> rootNodes)	{ this.rootNodes = rootNodes; }
+
+	public TreeNode getCurrentSelection()						{ return currentSelection; }
+	public void setCurrentSelection(TreeNode currentSelection)	{ this.currentSelection = currentSelection; }
+
+	
+	@PostConstruct
+	public void init() {
+		// build group hierarchy
+		mapDTOGroup = mgtSvc.queryGroups();
+		for (DTOGroup dtoGroup : mapDTOGroup.values())
+		{
+			attachGroupNode(dtoGroup);
+		}
+		
+		// attach users
+		mapDTOUsers = mgtSvc.queryUsers();
+		mapDTOGroupLinks = mgtSvc.queryGroupLinks();
+		for (DTOUser dtoUser : mapDTOUsers.values())
+		{
+			attachUserNode(dtoUser);
+		}
+		
+		log.log(Level.INFO, "Tree constructed successfuly.");
+	}
+	
+	private void attachUserNode(DTOUser dtoUser)
+	{
+		List<DTOGroupLink> lstLink = mapDTOGroupLinks.get(dtoUser.getUserId());
+		// user is shown only when he is at least in one group
+		if (null != lstLink)
+		{
+			GroupNode parentNode = cacheGroupNodes.get(lstLink.getGroupId());
+			if (null != parentNode)
+			{
+				UserNode userNode = new UserNode();
+				userNode.setKey(dtoUser.getUserId());
+				userNode.setName(String.format("%s %s [%s]", dtoUser.getFname(), dtoUser.getLname(), lstLink.getLinkType()));
+				parentNode.getChildren().add(userNode);
+			}
+		}
+	}
+	
+	private GroupNode attachGroupNode(DTOGroup dtoGroup)
+	{
+		GroupNode node = cacheGroupNodes.get(dtoGroup.getGroupId());
+		if (null == node)
+		{
+			// Node for this group is not present in the tree
+			// creating new node
+			node = new GroupNode();
+			node.setKey(dtoGroup.getGroupId());
+			node.setName(dtoGroup.getTitle());
+			// Cache it for later use
+			cacheGroupNodes.put(dtoGroup.getGroupId(), node);
+			if (null == dtoGroup.getParent())
+			{
+				rootNodes.add(node);
+			}
+			else
+			{
+				// Not a root node(find parent and attach this node to it)
+				// Recursively get it (from cache or create new)
+				DTOGroup dtoParent = mapDTOGroup.get(dtoGroup.getParent());
+				GroupNode parentNode = attachGroupNode(dtoParent);
+				parentNode.getChildren().add(node);
+			}
+		}
+		
+		return node;
+	}
+
+	public void selectionChanged(TreeSelectionChangeEvent selectionChangeEvent) {
+		// considering only single selection
+		List<Object> selection = new ArrayList<Object>(selectionChangeEvent.getNewSelection());
+		Object currentSelectionKey = selection.get(0);
+		AbstractTree tree = (AbstractTree)selectionChangeEvent.getSource();
+
+		Object storedKey = tree.getRowKey();
+		tree.setRowKey(currentSelectionKey);
+		currentSelection = (TreeNode)tree.getRowData();
+		tree.setRowKey(storedKey);
+	}
+}

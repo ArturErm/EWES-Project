@@ -1,0 +1,102 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.entity;
+
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+/**
+ *
+ * @author Artur
+ */
+@Entity
+@Table(name = "text_resources")
+@NamedQueries({
+		@NamedQuery(name = "DTOTextResource.findAll", query = "SELECT t FROM DTOTextResource t"),
+		@NamedQuery(name = "DTOTextResource.findByResourceId", query = "SELECT t FROM DTOTextResource t WHERE t.textResourcesPK.resourceId = :resourceId"),
+		@NamedQuery(name = "DTOTextResource.findByLangId", query = "SELECT t FROM DTOTextResource t WHERE t.textResourcesPK.langId = :langId"),
+		@NamedQuery(name = "DTOTextResource.findByResourceText", query = "SELECT t FROM DTOTextResource t WHERE t.resourceText = :resourceText") })
+public class DTOTextResource implements Serializable {
+	private static final long serialVersionUID = 1L;
+	@EmbeddedId
+	protected DTOTextResourcesPK textResourcesPK;
+	@Basic(optional = false)
+	@NotNull
+	@Size(min = 1, max = 512)
+	@Column(name = "RESOURCE_TEXT")
+	private String resourceText;
+
+	public DTOTextResource() {
+	}
+
+	public DTOTextResource(DTOTextResourcesPK textResourcesPK) {
+		this.textResourcesPK = textResourcesPK;
+	}
+
+	public DTOTextResource(DTOTextResourcesPK textResourcesPK,
+			String resourceText) {
+		this.textResourcesPK = textResourcesPK;
+		this.resourceText = resourceText;
+	}
+
+	public DTOTextResource(String resourceId, int langId) {
+		this.textResourcesPK = new DTOTextResourcesPK(resourceId, langId);
+	}
+
+	public DTOTextResourcesPK getTextResourcesPK() {
+		return textResourcesPK;
+	}
+
+	public void setTextResourcesPK(DTOTextResourcesPK textResourcesPK) {
+		this.textResourcesPK = textResourcesPK;
+	}
+
+	public String getResourceText() {
+		return resourceText;
+	}
+
+	public void setResourceText(String resourceText) {
+		this.resourceText = resourceText;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (textResourcesPK != null ? textResourcesPK.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof DTOTextResource)) {
+			return false;
+		}
+		DTOTextResource other = (DTOTextResource) object;
+		if ((this.textResourcesPK == null && other.textResourcesPK != null)
+				|| (this.textResourcesPK != null && !this.textResourcesPK
+						.equals(other.textResourcesPK))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ee.iati.ewes.dto.TextResources[ textResourcesPK="
+				+ textResourcesPK + " ]";
+	}
+
+}

@@ -1,0 +1,55 @@
+package ee.iati.ewes.web.controller.tree;
+
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+
+import javax.swing.tree.TreeNode;
+
+public class GroupNode extends NamedNode implements TreeNode {
+	private static final long serialVersionUID = 1L;
+	private List<TreeNode> childNodes = new ArrayList<TreeNode>();
+	private TreeNode parent = null;
+	
+	public GroupNode() { this.setType("group"); }
+	
+	@Override
+	public TreeNode getChildAt(int childIndex) {
+		return childNodes.get(childIndex);
+	}
+
+	@Override
+	public int getChildCount() {
+		return childNodes.size();
+	}
+
+	@Override
+	public TreeNode getParent() {
+		return null;
+	}
+
+	@Override
+	public int getIndex(TreeNode node) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean getAllowsChildren() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isLeaf() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Enumeration children() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,77 @@
+package ee.iati.ewes.ejb;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+import javax.jws.WebService;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaQuery;
+
+import ee.iati.ewes.dto.DTOGroup;
+import ee.iati.ewes.dto.DTOGroupLink;
+import ee.iati.ewes.dto.DTOUser;
+import ee.iati.ewes.entity.EntityGroup;
+import ee.iati.ewes.entity.EntityGroupLink;
+import ee.iati.ewes.entity.EntityUser;
+
+
+/**
+ * Session Bean implementation class ManagementBean
+ */
+@Stateless
+@LocalBean
+@WebService
+public class ManagementBean implements ManagementBeanRemote {
+	@PersistenceContext EntityManager em;
+	
+	/**
+	 * Default constructor.
+	 */
+	public ManagementBean() {
+	}
+
+	public Map<Integer, DTOUser> queryUsers() {
+		CriteriaQuery<EntityUser> criteria = em.getCriteriaBuilder().createQuery(EntityUser.class);
+		criteria.select(criteria.from(EntityUser.class));
+		List<EntityUser> lstEntityUsers = em.createQuery(criteria).getResultList();
+		
+		Map<Integer, DTOUser> mapDTOUsers = new HashMap<Integer, DTOUser>(lstEntityUsers.size());
+		for (EntityUser entity : lstEntityUsers)
+		{
+			mapDTOUsers.put(entity.getUserId(), entity.toDTO());
+		}
+		return mapDTOUsers;
+	}
+	
+	public List<DTOGroupLink> queryGroupLinks()
+	{
+		CriteriaQuery<EntityGroupLink> criteria = em.getCriteriaBuilder().createQuery(EntityGroupLink.class);
+		criteria.select(criteria.from(EntityGroupLink.class));
+		List<EntityGroupLink> lstEntityGroupLink = em.createQuery(criteria).getResultList();
+		
+		List<EntityGroupLink> lstRet = new ArrayList<EntityGroupLink>(lstEntityGroupLink.size());
+		for (EntityGroup entity : lstEntityGroupLink)
+		{
+			lstRet.put(entity.getGroupId(), entity.toDTO());
+		}
+		return lstRet;
+	}
+	
+	public Map<Integer, DTOGroup> queryGroups()
+	{
+		CriteriaQuery<EntityGroup> criteria = em.getCriteriaBuilder().createQuery(EntityGroup.class);
+		criteria.select(criteria.from(EntityGroup.class));
+		List<EntityGroup> lstEntityGroup = em.createQuery(criteria).getResultList();
+		
+		Map<Integer, DTOGroup> mapRet = new HashMap<Integer, DTOGroup>(lstEntityGroup.size());
+		for (EntityGroup entity : lstEntityGroup)
+		{
+			mapRet.put(entity.getGroupId(), entity.toDTO());
+		}
+		return mapRet;
+	}
+}

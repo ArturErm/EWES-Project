@@ -1,0 +1,16 @@
+package ee.iati.ewes.entity;
+
+import javax.annotation.Generated;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+
+@Generated(value="Dali", date="2015-03-29T14:51:52.592+0300")
+@StaticMetamodel(DTOUser.class)
+public class DTOUser_ {
+	public static volatile SingularAttribute<DTOUser, Integer> userId;
+	public static volatile SingularAttribute<DTOUser, String> fname;
+	public static volatile SingularAttribute<DTOUser, String> lname;
+	public static volatile SingularAttribute<DTOUser, String> pwd;
+	public static volatile SingularAttribute<DTOUser, String> email;
+	public static volatile SingularAttribute<DTOUser, String> ik;
+}

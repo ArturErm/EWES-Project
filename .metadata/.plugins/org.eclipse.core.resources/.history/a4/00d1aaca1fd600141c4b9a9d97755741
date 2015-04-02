@@ -1,0 +1,17 @@
+package ee.iati.ewes.entity;
+
+import javax.annotation.Generated;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+
+@Generated(value="Dali", date="2015-03-29T14:53:04.351+0300")
+@StaticMetamodel(DTOAccessRule.class)
+public class DTOAccessRule_ {
+	public static volatile SingularAttribute<DTOAccessRule, Integer> aclId;
+	public static volatile SingularAttribute<DTOAccessRule, EntityAccessRight> arId;
+	public static volatile SingularAttribute<DTOAccessRule, DTOSubject> assignedSubjectId;
+	public static volatile SingularAttribute<DTOAccessRule, DTOComponent> compId;
+	public static volatile SingularAttribute<DTOAccessRule, DTOUser> creatorId;
+	public static volatile SingularAttribute<DTOAccessRule, DTOGroup> groupId;
+	public static volatile SingularAttribute<DTOAccessRule, DTOUser> userId;
+}

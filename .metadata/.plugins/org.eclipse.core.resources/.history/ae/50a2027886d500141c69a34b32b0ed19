@@ -1,0 +1,230 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.dao;
+
+import ee.iati.ewes.dao.exceptions.IllegalOrphanException;
+import ee.iati.ewes.dao.exceptions.NonexistentEntityException;
+import ee.iati.ewes.dao.exceptions.PreexistingEntityException;
+import ee.iati.ewes.dao.exceptions.RollbackFailureException;
+import ee.iati.ewes.dto.DTOAccessRight;
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import ee.iati.ewes.dto.DTOAccessRule;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.transaction.UserTransaction;
+
+/**
+ *
+ * @author Artur
+ */
+public class AccessRightsJpaController implements Serializable {
+
+    public AccessRightsJpaController(UserTransaction utx, EntityManagerFactory emf) {
+        this.utx = utx;
+        this.emf = emf;
+    }
+    private UserTransaction utx = null;
+    private EntityManagerFactory emf = null;
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public void create(DTOAccessRight accessRights) throws PreexistingEntityException, RollbackFailureException, Exception {
+        if (accessRights.getAclList() == null) {
+            accessRights.setAclList(new ArrayList<DTOAccessRule>());
+        }
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            List<DTOAccessRule> attachedAclList = new ArrayList<DTOAccessRule>();
+            for (DTOAccessRule aclListAclToAttach : accessRights.getAclList()) {
+                aclListAclToAttach = em.getReference(aclListAclToAttach.getClass(), aclListAclToAttach.getAclId());
+                attachedAclList.add(aclListAclToAttach);
+            }
+            accessRights.setAclList(attachedAclList);
+            em.persist(accessRights);
+            for (DTOAccessRule aclListAcl : accessRights.getAclList()) {
+                DTOAccessRight oldArIdOfAclListAcl = aclListAcl.getArId();
+                aclListAcl.setArId(accessRights);
+                aclListAcl = em.merge(aclListAcl);
+                if (oldArIdOfAclListAcl != null) {
+                    oldArIdOfAclListAcl.getAclList().remove(aclListAcl);
+                    oldArIdOfAclListAcl = em.merge(oldArIdOfAclListAcl);
+                }
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            if (findAccessRights(accessRights.getArId()) != null) {
+                throw new PreexistingEntityException("AccessRights " + accessRights + " already exists.", ex);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void edit(DTOAccessRight accessRights) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOAccessRight persistentAccessRights = em.find(DTOAccessRight.class, accessRights.getArId());
+            List<DTOAccessRule> aclListOld = persistentAccessRights.getAclList();
+            List<DTOAccessRule> aclListNew = accessRights.getAclList();
+            List<String> illegalOrphanMessages = null;
+            for (DTOAccessRule aclListOldAcl : aclListOld) {
+                if (!aclListNew.contains(aclListOldAcl)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Acl " + aclListOldAcl + " since its arId field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<DTOAccessRule> attachedAclListNew = new ArrayList<DTOAccessRule>();
+            for (DTOAccessRule aclListNewAclToAttach : aclListNew) {
+                aclListNewAclToAttach = em.getReference(aclListNewAclToAttach.getClass(), aclListNewAclToAttach.getAclId());
+                attachedAclListNew.add(aclListNewAclToAttach);
+            }
+            aclListNew = attachedAclListNew;
+            accessRights.setAclList(aclListNew);
+            accessRights = em.merge(accessRights);
+            for (DTOAccessRule aclListNewAcl : aclListNew) {
+                if (!aclListOld.contains(aclListNewAcl)) {
+                    DTOAccessRight oldArIdOfAclListNewAcl = aclListNewAcl.getArId();
+                    aclListNewAcl.setArId(accessRights);
+                    aclListNewAcl = em.merge(aclListNewAcl);
+                    if (oldArIdOfAclListNewAcl != null && !oldArIdOfAclListNewAcl.equals(accessRights)) {
+                        oldArIdOfAclListNewAcl.getAclList().remove(aclListNewAcl);
+                        oldArIdOfAclListNewAcl = em.merge(oldArIdOfAclListNewAcl);
+                    }
+                }
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = accessRights.getArId();
+                if (findAccessRights(id) == null) {
+                    throw new NonexistentEntityException("The accessRights with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOAccessRight accessRights;
+            try {
+                accessRights = em.getReference(DTOAccessRight.class, id);
+                accessRights.getArId();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The accessRights with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<DTOAccessRule> aclListOrphanCheck = accessRights.getAclList();
+            for (DTOAccessRule aclListOrphanCheckAcl : aclListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This AccessRights (" + accessRights + ") cannot be destroyed since the Acl " + aclListOrphanCheckAcl + " in its aclList field has a non-nullable arId field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            em.remove(accessRights);
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public List<DTOAccessRight> findAccessRightsEntities() {
+        return findAccessRightsEntities(true, -1, -1);
+    }
+
+    public List<DTOAccessRight> findAccessRightsEntities(int maxResults, int firstResult) {
+        return findAccessRightsEntities(false, maxResults, firstResult);
+    }
+
+    private List<DTOAccessRight> findAccessRightsEntities(boolean all, int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(DTOAccessRight.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public DTOAccessRight findAccessRights(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(DTOAccessRight.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getAccessRightsCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<DTOAccessRight> rt = cq.from(DTOAccessRight.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+}

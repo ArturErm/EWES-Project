@@ -1,0 +1,407 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.dao;
+
+import ee.iati.ewes.dao.exceptions.IllegalOrphanException;
+import ee.iati.ewes.dao.exceptions.NonexistentEntityException;
+import ee.iati.ewes.dao.exceptions.RollbackFailureException;
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import ee.iati.ewes.dto.DTOGroup;
+import java.util.ArrayList;
+import java.util.List;
+import ee.iati.ewes.dto.DTOAccessRule;
+import ee.iati.ewes.dto.DTOSubject;
+import ee.iati.ewes.dto.DTOGroupLink;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.transaction.UserTransaction;
+
+/**
+ *
+ * @author Artur
+ */
+public class EwesGroupsJpaController implements Serializable {
+
+    public EwesGroupsJpaController(UserTransaction utx, EntityManagerFactory emf) {
+        this.utx = utx;
+        this.emf = emf;
+    }
+    private UserTransaction utx = null;
+    private EntityManagerFactory emf = null;
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public void create(DTOGroup ewesGroups) throws RollbackFailureException, Exception {
+        if (ewesGroups.getEwesGroupsList() == null) {
+            ewesGroups.setEwesGroupsList(new ArrayList<DTOGroup>());
+        }
+        if (ewesGroups.getAclList() == null) {
+            ewesGroups.setAclList(new ArrayList<DTOAccessRule>());
+        }
+        if (ewesGroups.getAssignedSubjectsList() == null) {
+            ewesGroups.setAssignedSubjectsList(new ArrayList<DTOSubject>());
+        }
+        if (ewesGroups.getGroupLinksList() == null) {
+            ewesGroups.setGroupLinksList(new ArrayList<DTOGroupLink>());
+        }
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOGroup parentId = ewesGroups.getParentId();
+            if (parentId != null) {
+                parentId = em.getReference(parentId.getClass(), parentId.getGroupId());
+                ewesGroups.setParentId(parentId);
+            }
+            List<DTOGroup> attachedEwesGroupsList = new ArrayList<DTOGroup>();
+            for (DTOGroup ewesGroupsListEwesGroupsToAttach : ewesGroups.getEwesGroupsList()) {
+                ewesGroupsListEwesGroupsToAttach = em.getReference(ewesGroupsListEwesGroupsToAttach.getClass(), ewesGroupsListEwesGroupsToAttach.getGroupId());
+                attachedEwesGroupsList.add(ewesGroupsListEwesGroupsToAttach);
+            }
+            ewesGroups.setEwesGroupsList(attachedEwesGroupsList);
+            List<DTOAccessRule> attachedAclList = new ArrayList<DTOAccessRule>();
+            for (DTOAccessRule aclListAclToAttach : ewesGroups.getAclList()) {
+                aclListAclToAttach = em.getReference(aclListAclToAttach.getClass(), aclListAclToAttach.getAclId());
+                attachedAclList.add(aclListAclToAttach);
+            }
+            ewesGroups.setAclList(attachedAclList);
+            List<DTOSubject> attachedAssignedSubjectsList = new ArrayList<DTOSubject>();
+            for (DTOSubject assignedSubjectsListAssignedSubjectsToAttach : ewesGroups.getAssignedSubjectsList()) {
+                assignedSubjectsListAssignedSubjectsToAttach = em.getReference(assignedSubjectsListAssignedSubjectsToAttach.getClass(), assignedSubjectsListAssignedSubjectsToAttach.getAssignedSubjectId());
+                attachedAssignedSubjectsList.add(assignedSubjectsListAssignedSubjectsToAttach);
+            }
+            ewesGroups.setAssignedSubjectsList(attachedAssignedSubjectsList);
+            List<DTOGroupLink> attachedGroupLinksList = new ArrayList<DTOGroupLink>();
+            for (DTOGroupLink groupLinksListGroupLinksToAttach : ewesGroups.getGroupLinksList()) {
+                groupLinksListGroupLinksToAttach = em.getReference(groupLinksListGroupLinksToAttach.getClass(), groupLinksListGroupLinksToAttach.getGroupLinkId());
+                attachedGroupLinksList.add(groupLinksListGroupLinksToAttach);
+            }
+            ewesGroups.setGroupLinksList(attachedGroupLinksList);
+            em.persist(ewesGroups);
+            if (parentId != null) {
+                parentId.getEwesGroupsList().add(ewesGroups);
+                parentId = em.merge(parentId);
+            }
+            for (DTOGroup ewesGroupsListEwesGroups : ewesGroups.getEwesGroupsList()) {
+                DTOGroup oldParentIdOfEwesGroupsListEwesGroups = ewesGroupsListEwesGroups.getParentId();
+                ewesGroupsListEwesGroups.setParentId(ewesGroups);
+                ewesGroupsListEwesGroups = em.merge(ewesGroupsListEwesGroups);
+                if (oldParentIdOfEwesGroupsListEwesGroups != null) {
+                    oldParentIdOfEwesGroupsListEwesGroups.getEwesGroupsList().remove(ewesGroupsListEwesGroups);
+                    oldParentIdOfEwesGroupsListEwesGroups = em.merge(oldParentIdOfEwesGroupsListEwesGroups);
+                }
+            }
+            for (DTOAccessRule aclListAcl : ewesGroups.getAclList()) {
+                DTOGroup oldGroupIdOfAclListAcl = aclListAcl.getGroupId();
+                aclListAcl.setGroupId(ewesGroups);
+                aclListAcl = em.merge(aclListAcl);
+                if (oldGroupIdOfAclListAcl != null) {
+                    oldGroupIdOfAclListAcl.getAclList().remove(aclListAcl);
+                    oldGroupIdOfAclListAcl = em.merge(oldGroupIdOfAclListAcl);
+                }
+            }
+            for (DTOSubject assignedSubjectsListAssignedSubjects : ewesGroups.getAssignedSubjectsList()) {
+                DTOGroup oldGroupIdOfAssignedSubjectsListAssignedSubjects = assignedSubjectsListAssignedSubjects.getGroupId();
+                assignedSubjectsListAssignedSubjects.setGroupId(ewesGroups);
+                assignedSubjectsListAssignedSubjects = em.merge(assignedSubjectsListAssignedSubjects);
+                if (oldGroupIdOfAssignedSubjectsListAssignedSubjects != null) {
+                    oldGroupIdOfAssignedSubjectsListAssignedSubjects.getAssignedSubjectsList().remove(assignedSubjectsListAssignedSubjects);
+                    oldGroupIdOfAssignedSubjectsListAssignedSubjects = em.merge(oldGroupIdOfAssignedSubjectsListAssignedSubjects);
+                }
+            }
+            for (DTOGroupLink groupLinksListGroupLinks : ewesGroups.getGroupLinksList()) {
+                DTOGroup oldGroupIdOfGroupLinksListGroupLinks = groupLinksListGroupLinks.getGroupId();
+                groupLinksListGroupLinks.setGroupId(ewesGroups);
+                groupLinksListGroupLinks = em.merge(groupLinksListGroupLinks);
+                if (oldGroupIdOfGroupLinksListGroupLinks != null) {
+                    oldGroupIdOfGroupLinksListGroupLinks.getGroupLinksList().remove(groupLinksListGroupLinks);
+                    oldGroupIdOfGroupLinksListGroupLinks = em.merge(oldGroupIdOfGroupLinksListGroupLinks);
+                }
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void edit(DTOGroup ewesGroups) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOGroup persistentEwesGroups = em.find(DTOGroup.class, ewesGroups.getGroupId());
+            DTOGroup parentIdOld = persistentEwesGroups.getParentId();
+            DTOGroup parentIdNew = ewesGroups.getParentId();
+            List<DTOGroup> ewesGroupsListOld = persistentEwesGroups.getEwesGroupsList();
+            List<DTOGroup> ewesGroupsListNew = ewesGroups.getEwesGroupsList();
+            List<DTOAccessRule> aclListOld = persistentEwesGroups.getAclList();
+            List<DTOAccessRule> aclListNew = ewesGroups.getAclList();
+            List<DTOSubject> assignedSubjectsListOld = persistentEwesGroups.getAssignedSubjectsList();
+            List<DTOSubject> assignedSubjectsListNew = ewesGroups.getAssignedSubjectsList();
+            List<DTOGroupLink> groupLinksListOld = persistentEwesGroups.getGroupLinksList();
+            List<DTOGroupLink> groupLinksListNew = ewesGroups.getGroupLinksList();
+            List<String> illegalOrphanMessages = null;
+            for (DTOSubject assignedSubjectsListOldAssignedSubjects : assignedSubjectsListOld) {
+                if (!assignedSubjectsListNew.contains(assignedSubjectsListOldAssignedSubjects)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain AssignedSubjects " + assignedSubjectsListOldAssignedSubjects + " since its groupId field is not nullable.");
+                }
+            }
+            for (DTOGroupLink groupLinksListOldGroupLinks : groupLinksListOld) {
+                if (!groupLinksListNew.contains(groupLinksListOldGroupLinks)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain GroupLinks " + groupLinksListOldGroupLinks + " since its groupId field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            if (parentIdNew != null) {
+                parentIdNew = em.getReference(parentIdNew.getClass(), parentIdNew.getGroupId());
+                ewesGroups.setParentId(parentIdNew);
+            }
+            List<DTOGroup> attachedEwesGroupsListNew = new ArrayList<DTOGroup>();
+            for (DTOGroup ewesGroupsListNewEwesGroupsToAttach : ewesGroupsListNew) {
+                ewesGroupsListNewEwesGroupsToAttach = em.getReference(ewesGroupsListNewEwesGroupsToAttach.getClass(), ewesGroupsListNewEwesGroupsToAttach.getGroupId());
+                attachedEwesGroupsListNew.add(ewesGroupsListNewEwesGroupsToAttach);
+            }
+            ewesGroupsListNew = attachedEwesGroupsListNew;
+            ewesGroups.setEwesGroupsList(ewesGroupsListNew);
+            List<DTOAccessRule> attachedAclListNew = new ArrayList<DTOAccessRule>();
+            for (DTOAccessRule aclListNewAclToAttach : aclListNew) {
+                aclListNewAclToAttach = em.getReference(aclListNewAclToAttach.getClass(), aclListNewAclToAttach.getAclId());
+                attachedAclListNew.add(aclListNewAclToAttach);
+            }
+            aclListNew = attachedAclListNew;
+            ewesGroups.setAclList(aclListNew);
+            List<DTOSubject> attachedAssignedSubjectsListNew = new ArrayList<DTOSubject>();
+            for (DTOSubject assignedSubjectsListNewAssignedSubjectsToAttach : assignedSubjectsListNew) {
+                assignedSubjectsListNewAssignedSubjectsToAttach = em.getReference(assignedSubjectsListNewAssignedSubjectsToAttach.getClass(), assignedSubjectsListNewAssignedSubjectsToAttach.getAssignedSubjectId());
+                attachedAssignedSubjectsListNew.add(assignedSubjectsListNewAssignedSubjectsToAttach);
+            }
+            assignedSubjectsListNew = attachedAssignedSubjectsListNew;
+            ewesGroups.setAssignedSubjectsList(assignedSubjectsListNew);
+            List<DTOGroupLink> attachedGroupLinksListNew = new ArrayList<DTOGroupLink>();
+            for (DTOGroupLink groupLinksListNewGroupLinksToAttach : groupLinksListNew) {
+                groupLinksListNewGroupLinksToAttach = em.getReference(groupLinksListNewGroupLinksToAttach.getClass(), groupLinksListNewGroupLinksToAttach.getGroupLinkId());
+                attachedGroupLinksListNew.add(groupLinksListNewGroupLinksToAttach);
+            }
+            groupLinksListNew = attachedGroupLinksListNew;
+            ewesGroups.setGroupLinksList(groupLinksListNew);
+            ewesGroups = em.merge(ewesGroups);
+            if (parentIdOld != null && !parentIdOld.equals(parentIdNew)) {
+                parentIdOld.getEwesGroupsList().remove(ewesGroups);
+                parentIdOld = em.merge(parentIdOld);
+            }
+            if (parentIdNew != null && !parentIdNew.equals(parentIdOld)) {
+                parentIdNew.getEwesGroupsList().add(ewesGroups);
+                parentIdNew = em.merge(parentIdNew);
+            }
+            for (DTOGroup ewesGroupsListOldEwesGroups : ewesGroupsListOld) {
+                if (!ewesGroupsListNew.contains(ewesGroupsListOldEwesGroups)) {
+                    ewesGroupsListOldEwesGroups.setParentId(null);
+                    ewesGroupsListOldEwesGroups = em.merge(ewesGroupsListOldEwesGroups);
+                }
+            }
+            for (DTOGroup ewesGroupsListNewEwesGroups : ewesGroupsListNew) {
+                if (!ewesGroupsListOld.contains(ewesGroupsListNewEwesGroups)) {
+                    DTOGroup oldParentIdOfEwesGroupsListNewEwesGroups = ewesGroupsListNewEwesGroups.getParentId();
+                    ewesGroupsListNewEwesGroups.setParentId(ewesGroups);
+                    ewesGroupsListNewEwesGroups = em.merge(ewesGroupsListNewEwesGroups);
+                    if (oldParentIdOfEwesGroupsListNewEwesGroups != null && !oldParentIdOfEwesGroupsListNewEwesGroups.equals(ewesGroups)) {
+                        oldParentIdOfEwesGroupsListNewEwesGroups.getEwesGroupsList().remove(ewesGroupsListNewEwesGroups);
+                        oldParentIdOfEwesGroupsListNewEwesGroups = em.merge(oldParentIdOfEwesGroupsListNewEwesGroups);
+                    }
+                }
+            }
+            for (DTOAccessRule aclListOldAcl : aclListOld) {
+                if (!aclListNew.contains(aclListOldAcl)) {
+                    aclListOldAcl.setGroupId(null);
+                    aclListOldAcl = em.merge(aclListOldAcl);
+                }
+            }
+            for (DTOAccessRule aclListNewAcl : aclListNew) {
+                if (!aclListOld.contains(aclListNewAcl)) {
+                    DTOGroup oldGroupIdOfAclListNewAcl = aclListNewAcl.getGroupId();
+                    aclListNewAcl.setGroupId(ewesGroups);
+                    aclListNewAcl = em.merge(aclListNewAcl);
+                    if (oldGroupIdOfAclListNewAcl != null && !oldGroupIdOfAclListNewAcl.equals(ewesGroups)) {
+                        oldGroupIdOfAclListNewAcl.getAclList().remove(aclListNewAcl);
+                        oldGroupIdOfAclListNewAcl = em.merge(oldGroupIdOfAclListNewAcl);
+                    }
+                }
+            }
+            for (DTOSubject assignedSubjectsListNewAssignedSubjects : assignedSubjectsListNew) {
+                if (!assignedSubjectsListOld.contains(assignedSubjectsListNewAssignedSubjects)) {
+                    DTOGroup oldGroupIdOfAssignedSubjectsListNewAssignedSubjects = assignedSubjectsListNewAssignedSubjects.getGroupId();
+                    assignedSubjectsListNewAssignedSubjects.setGroupId(ewesGroups);
+                    assignedSubjectsListNewAssignedSubjects = em.merge(assignedSubjectsListNewAssignedSubjects);
+                    if (oldGroupIdOfAssignedSubjectsListNewAssignedSubjects != null && !oldGroupIdOfAssignedSubjectsListNewAssignedSubjects.equals(ewesGroups)) {
+                        oldGroupIdOfAssignedSubjectsListNewAssignedSubjects.getAssignedSubjectsList().remove(assignedSubjectsListNewAssignedSubjects);
+                        oldGroupIdOfAssignedSubjectsListNewAssignedSubjects = em.merge(oldGroupIdOfAssignedSubjectsListNewAssignedSubjects);
+                    }
+                }
+            }
+            for (DTOGroupLink groupLinksListNewGroupLinks : groupLinksListNew) {
+                if (!groupLinksListOld.contains(groupLinksListNewGroupLinks)) {
+                    DTOGroup oldGroupIdOfGroupLinksListNewGroupLinks = groupLinksListNewGroupLinks.getGroupId();
+                    groupLinksListNewGroupLinks.setGroupId(ewesGroups);
+                    groupLinksListNewGroupLinks = em.merge(groupLinksListNewGroupLinks);
+                    if (oldGroupIdOfGroupLinksListNewGroupLinks != null && !oldGroupIdOfGroupLinksListNewGroupLinks.equals(ewesGroups)) {
+                        oldGroupIdOfGroupLinksListNewGroupLinks.getGroupLinksList().remove(groupLinksListNewGroupLinks);
+                        oldGroupIdOfGroupLinksListNewGroupLinks = em.merge(oldGroupIdOfGroupLinksListNewGroupLinks);
+                    }
+                }
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = ewesGroups.getGroupId();
+                if (findEwesGroups(id) == null) {
+                    throw new NonexistentEntityException("The ewesGroups with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOGroup ewesGroups;
+            try {
+                ewesGroups = em.getReference(DTOGroup.class, id);
+                ewesGroups.getGroupId();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The ewesGroups with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<DTOSubject> assignedSubjectsListOrphanCheck = ewesGroups.getAssignedSubjectsList();
+            for (DTOSubject assignedSubjectsListOrphanCheckAssignedSubjects : assignedSubjectsListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This EwesGroups (" + ewesGroups + ") cannot be destroyed since the AssignedSubjects " + assignedSubjectsListOrphanCheckAssignedSubjects + " in its assignedSubjectsList field has a non-nullable groupId field.");
+            }
+            List<DTOGroupLink> groupLinksListOrphanCheck = ewesGroups.getGroupLinksList();
+            for (DTOGroupLink groupLinksListOrphanCheckGroupLinks : groupLinksListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This EwesGroups (" + ewesGroups + ") cannot be destroyed since the GroupLinks " + groupLinksListOrphanCheckGroupLinks + " in its groupLinksList field has a non-nullable groupId field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            DTOGroup parentId = ewesGroups.getParentId();
+            if (parentId != null) {
+                parentId.getEwesGroupsList().remove(ewesGroups);
+                parentId = em.merge(parentId);
+            }
+            List<DTOGroup> ewesGroupsList = ewesGroups.getEwesGroupsList();
+            for (DTOGroup ewesGroupsListEwesGroups : ewesGroupsList) {
+                ewesGroupsListEwesGroups.setParentId(null);
+                ewesGroupsListEwesGroups = em.merge(ewesGroupsListEwesGroups);
+            }
+            List<DTOAccessRule> aclList = ewesGroups.getAclList();
+            for (DTOAccessRule aclListAcl : aclList) {
+                aclListAcl.setGroupId(null);
+                aclListAcl = em.merge(aclListAcl);
+            }
+            em.remove(ewesGroups);
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public List<DTOGroup> findEwesGroupsEntities() {
+        return findEwesGroupsEntities(true, -1, -1);
+    }
+
+    public List<DTOGroup> findEwesGroupsEntities(int maxResults, int firstResult) {
+        return findEwesGroupsEntities(false, maxResults, firstResult);
+    }
+
+    private List<DTOGroup> findEwesGroupsEntities(boolean all, int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(DTOGroup.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public DTOGroup findEwesGroups(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(DTOGroup.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getEwesGroupsCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<DTOGroup> rt = cq.from(DTOGroup.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+}

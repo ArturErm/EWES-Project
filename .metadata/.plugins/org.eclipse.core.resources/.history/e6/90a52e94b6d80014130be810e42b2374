@@ -1,0 +1,33 @@
+package ee.iati.ewes.web.beans;
+
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
+
+import ee.iati.ewes.dto.DTOUser;
+import ee.iati.ewes.ejb.ManagementBean;
+
+@ManagedBean
+@ViewScoped
+public class UserBean implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	@EJB protected ManagementBean mgtSvc;
+	@Inject protected Logger log;
+	
+	private DTOUser user;
+
+	public DTOUser getUser() { return user; }
+	public void setUser(DTOUser user) { this.user = user; }
+	
+	public void createUser()
+	{
+		log.log(Level.INFO, user.toString());
+	}
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modules>
+  <module moduleId="org.eclipse.jst.jee.server:EWES" serverId="WildFly 8.x1427546231977"/>
+  <module moduleId="org.eclipse.jst.jee.server:ewes" serverId="JBoss Enterprise Application Platform 6.1+1427561685800"/>
+  <module moduleId="org.eclipse.jst.jee.server:ewesEJB" serverId="JBoss Enterprise Application Platform 6.1+1427561685800"/>
+</modules>

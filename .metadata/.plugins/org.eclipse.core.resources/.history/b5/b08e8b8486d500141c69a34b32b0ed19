@@ -1,0 +1,585 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.dao;
+
+import ee.iati.ewes.dao.exceptions.IllegalOrphanException;
+import ee.iati.ewes.dao.exceptions.NonexistentEntityException;
+import ee.iati.ewes.dao.exceptions.RollbackFailureException;
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import ee.iati.ewes.dto.DTOAccessRule;
+import java.util.ArrayList;
+import java.util.List;
+import ee.iati.ewes.dto.DTOUserLink;
+import ee.iati.ewes.dto.DTOSubject;
+import ee.iati.ewes.dto.DTOUser;
+import ee.iati.ewes.dto.DTOGroupLink;
+import ee.iati.ewes.dto.DTONotification;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.transaction.UserTransaction;
+
+/**
+ *
+ * @author Artur
+ */
+public class EwesUsersJpaController implements Serializable {
+
+    public EwesUsersJpaController(UserTransaction utx, EntityManagerFactory emf) {
+        this.utx = utx;
+        this.emf = emf;
+    }
+    private UserTransaction utx = null;
+    private EntityManagerFactory emf = null;
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public void create(DTOUser ewesUsers) throws RollbackFailureException, Exception {
+        if (ewesUsers.getAclList() == null) {
+            ewesUsers.setAclList(new ArrayList<DTOAccessRule>());
+        }
+        if (ewesUsers.getAclList1() == null) {
+            ewesUsers.setAclList1(new ArrayList<DTOAccessRule>());
+        }
+        if (ewesUsers.getUserLinksList() == null) {
+            ewesUsers.setUserLinksList(new ArrayList<DTOUserLink>());
+        }
+        if (ewesUsers.getUserLinksList1() == null) {
+            ewesUsers.setUserLinksList1(new ArrayList<DTOUserLink>());
+        }
+        if (ewesUsers.getAssignedSubjectsList() == null) {
+            ewesUsers.setAssignedSubjectsList(new ArrayList<DTOSubject>());
+        }
+        if (ewesUsers.getGroupLinksList() == null) {
+            ewesUsers.setGroupLinksList(new ArrayList<DTOGroupLink>());
+        }
+        if (ewesUsers.getNotificationsList() == null) {
+            ewesUsers.setNotificationsList(new ArrayList<DTONotification>());
+        }
+        if (ewesUsers.getNotificationsList1() == null) {
+            ewesUsers.setNotificationsList1(new ArrayList<DTONotification>());
+        }
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            List<DTOAccessRule> attachedAclList = new ArrayList<DTOAccessRule>();
+            for (DTOAccessRule aclListAclToAttach : ewesUsers.getAclList()) {
+                aclListAclToAttach = em.getReference(aclListAclToAttach.getClass(), aclListAclToAttach.getAclId());
+                attachedAclList.add(aclListAclToAttach);
+            }
+            ewesUsers.setAclList(attachedAclList);
+            List<DTOAccessRule> attachedAclList1 = new ArrayList<DTOAccessRule>();
+            for (DTOAccessRule aclList1AclToAttach : ewesUsers.getAclList1()) {
+                aclList1AclToAttach = em.getReference(aclList1AclToAttach.getClass(), aclList1AclToAttach.getAclId());
+                attachedAclList1.add(aclList1AclToAttach);
+            }
+            ewesUsers.setAclList1(attachedAclList1);
+            List<DTOUserLink> attachedUserLinksList = new ArrayList<DTOUserLink>();
+            for (DTOUserLink userLinksListUserLinksToAttach : ewesUsers.getUserLinksList()) {
+                userLinksListUserLinksToAttach = em.getReference(userLinksListUserLinksToAttach.getClass(), userLinksListUserLinksToAttach.getUserLinkId());
+                attachedUserLinksList.add(userLinksListUserLinksToAttach);
+            }
+            ewesUsers.setUserLinksList(attachedUserLinksList);
+            List<DTOUserLink> attachedUserLinksList1 = new ArrayList<DTOUserLink>();
+            for (DTOUserLink userLinksList1UserLinksToAttach : ewesUsers.getUserLinksList1()) {
+                userLinksList1UserLinksToAttach = em.getReference(userLinksList1UserLinksToAttach.getClass(), userLinksList1UserLinksToAttach.getUserLinkId());
+                attachedUserLinksList1.add(userLinksList1UserLinksToAttach);
+            }
+            ewesUsers.setUserLinksList1(attachedUserLinksList1);
+            List<DTOSubject> attachedAssignedSubjectsList = new ArrayList<DTOSubject>();
+            for (DTOSubject assignedSubjectsListAssignedSubjectsToAttach : ewesUsers.getAssignedSubjectsList()) {
+                assignedSubjectsListAssignedSubjectsToAttach = em.getReference(assignedSubjectsListAssignedSubjectsToAttach.getClass(), assignedSubjectsListAssignedSubjectsToAttach.getAssignedSubjectId());
+                attachedAssignedSubjectsList.add(assignedSubjectsListAssignedSubjectsToAttach);
+            }
+            ewesUsers.setAssignedSubjectsList(attachedAssignedSubjectsList);
+            List<DTOGroupLink> attachedGroupLinksList = new ArrayList<DTOGroupLink>();
+            for (DTOGroupLink groupLinksListGroupLinksToAttach : ewesUsers.getGroupLinksList()) {
+                groupLinksListGroupLinksToAttach = em.getReference(groupLinksListGroupLinksToAttach.getClass(), groupLinksListGroupLinksToAttach.getGroupLinkId());
+                attachedGroupLinksList.add(groupLinksListGroupLinksToAttach);
+            }
+            ewesUsers.setGroupLinksList(attachedGroupLinksList);
+            List<DTONotification> attachedNotificationsList = new ArrayList<DTONotification>();
+            for (DTONotification notificationsListNotificationsToAttach : ewesUsers.getNotificationsList()) {
+                notificationsListNotificationsToAttach = em.getReference(notificationsListNotificationsToAttach.getClass(), notificationsListNotificationsToAttach.getNotificationId());
+                attachedNotificationsList.add(notificationsListNotificationsToAttach);
+            }
+            ewesUsers.setNotificationsList(attachedNotificationsList);
+            List<DTONotification> attachedNotificationsList1 = new ArrayList<DTONotification>();
+            for (DTONotification notificationsList1NotificationsToAttach : ewesUsers.getNotificationsList1()) {
+                notificationsList1NotificationsToAttach = em.getReference(notificationsList1NotificationsToAttach.getClass(), notificationsList1NotificationsToAttach.getNotificationId());
+                attachedNotificationsList1.add(notificationsList1NotificationsToAttach);
+            }
+            ewesUsers.setNotificationsList1(attachedNotificationsList1);
+            em.persist(ewesUsers);
+            for (DTOAccessRule aclListAcl : ewesUsers.getAclList()) {
+                DTOUser oldCreatorIdOfAclListAcl = aclListAcl.getCreatorId();
+                aclListAcl.setCreatorId(ewesUsers);
+                aclListAcl = em.merge(aclListAcl);
+                if (oldCreatorIdOfAclListAcl != null) {
+                    oldCreatorIdOfAclListAcl.getAclList().remove(aclListAcl);
+                    oldCreatorIdOfAclListAcl = em.merge(oldCreatorIdOfAclListAcl);
+                }
+            }
+            for (DTOAccessRule aclList1Acl : ewesUsers.getAclList1()) {
+                DTOUser oldUserIdOfAclList1Acl = aclList1Acl.getUserId();
+                aclList1Acl.setUserId(ewesUsers);
+                aclList1Acl = em.merge(aclList1Acl);
+                if (oldUserIdOfAclList1Acl != null) {
+                    oldUserIdOfAclList1Acl.getAclList1().remove(aclList1Acl);
+                    oldUserIdOfAclList1Acl = em.merge(oldUserIdOfAclList1Acl);
+                }
+            }
+            for (DTOUserLink userLinksListUserLinks : ewesUsers.getUserLinksList()) {
+                DTOUser oldChildIdOfUserLinksListUserLinks = userLinksListUserLinks.getChildId();
+                userLinksListUserLinks.setChildId(ewesUsers);
+                userLinksListUserLinks = em.merge(userLinksListUserLinks);
+                if (oldChildIdOfUserLinksListUserLinks != null) {
+                    oldChildIdOfUserLinksListUserLinks.getUserLinksList().remove(userLinksListUserLinks);
+                    oldChildIdOfUserLinksListUserLinks = em.merge(oldChildIdOfUserLinksListUserLinks);
+                }
+            }
+            for (DTOUserLink userLinksList1UserLinks : ewesUsers.getUserLinksList1()) {
+                DTOUser oldMasterIdOfUserLinksList1UserLinks = userLinksList1UserLinks.getMasterId();
+                userLinksList1UserLinks.setMasterId(ewesUsers);
+                userLinksList1UserLinks = em.merge(userLinksList1UserLinks);
+                if (oldMasterIdOfUserLinksList1UserLinks != null) {
+                    oldMasterIdOfUserLinksList1UserLinks.getUserLinksList1().remove(userLinksList1UserLinks);
+                    oldMasterIdOfUserLinksList1UserLinks = em.merge(oldMasterIdOfUserLinksList1UserLinks);
+                }
+            }
+            for (DTOSubject assignedSubjectsListAssignedSubjects : ewesUsers.getAssignedSubjectsList()) {
+                DTOUser oldTeacherIdOfAssignedSubjectsListAssignedSubjects = assignedSubjectsListAssignedSubjects.getTeacherId();
+                assignedSubjectsListAssignedSubjects.setTeacherId(ewesUsers);
+                assignedSubjectsListAssignedSubjects = em.merge(assignedSubjectsListAssignedSubjects);
+                if (oldTeacherIdOfAssignedSubjectsListAssignedSubjects != null) {
+                    oldTeacherIdOfAssignedSubjectsListAssignedSubjects.getAssignedSubjectsList().remove(assignedSubjectsListAssignedSubjects);
+                    oldTeacherIdOfAssignedSubjectsListAssignedSubjects = em.merge(oldTeacherIdOfAssignedSubjectsListAssignedSubjects);
+                }
+            }
+            for (DTOGroupLink groupLinksListGroupLinks : ewesUsers.getGroupLinksList()) {
+                DTOUser oldUserIdOfGroupLinksListGroupLinks = groupLinksListGroupLinks.getUserId();
+                groupLinksListGroupLinks.setUserId(ewesUsers);
+                groupLinksListGroupLinks = em.merge(groupLinksListGroupLinks);
+                if (oldUserIdOfGroupLinksListGroupLinks != null) {
+                    oldUserIdOfGroupLinksListGroupLinks.getGroupLinksList().remove(groupLinksListGroupLinks);
+                    oldUserIdOfGroupLinksListGroupLinks = em.merge(oldUserIdOfGroupLinksListGroupLinks);
+                }
+            }
+            for (DTONotification notificationsListNotifications : ewesUsers.getNotificationsList()) {
+                DTOUser oldRecieverIdOfNotificationsListNotifications = notificationsListNotifications.getRecieverId();
+                notificationsListNotifications.setRecieverId(ewesUsers);
+                notificationsListNotifications = em.merge(notificationsListNotifications);
+                if (oldRecieverIdOfNotificationsListNotifications != null) {
+                    oldRecieverIdOfNotificationsListNotifications.getNotificationsList().remove(notificationsListNotifications);
+                    oldRecieverIdOfNotificationsListNotifications = em.merge(oldRecieverIdOfNotificationsListNotifications);
+                }
+            }
+            for (DTONotification notificationsList1Notifications : ewesUsers.getNotificationsList1()) {
+                DTOUser oldSenderIdOfNotificationsList1Notifications = notificationsList1Notifications.getSenderId();
+                notificationsList1Notifications.setSenderId(ewesUsers);
+                notificationsList1Notifications = em.merge(notificationsList1Notifications);
+                if (oldSenderIdOfNotificationsList1Notifications != null) {
+                    oldSenderIdOfNotificationsList1Notifications.getNotificationsList1().remove(notificationsList1Notifications);
+                    oldSenderIdOfNotificationsList1Notifications = em.merge(oldSenderIdOfNotificationsList1Notifications);
+                }
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void edit(DTOUser ewesUsers) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOUser persistentEwesUsers = em.find(DTOUser.class, ewesUsers.getUserId());
+            List<DTOAccessRule> aclListOld = persistentEwesUsers.getAclList();
+            List<DTOAccessRule> aclListNew = ewesUsers.getAclList();
+            List<DTOAccessRule> aclList1Old = persistentEwesUsers.getAclList1();
+            List<DTOAccessRule> aclList1New = ewesUsers.getAclList1();
+            List<DTOUserLink> userLinksListOld = persistentEwesUsers.getUserLinksList();
+            List<DTOUserLink> userLinksListNew = ewesUsers.getUserLinksList();
+            List<DTOUserLink> userLinksList1Old = persistentEwesUsers.getUserLinksList1();
+            List<DTOUserLink> userLinksList1New = ewesUsers.getUserLinksList1();
+            List<DTOSubject> assignedSubjectsListOld = persistentEwesUsers.getAssignedSubjectsList();
+            List<DTOSubject> assignedSubjectsListNew = ewesUsers.getAssignedSubjectsList();
+            List<DTOGroupLink> groupLinksListOld = persistentEwesUsers.getGroupLinksList();
+            List<DTOGroupLink> groupLinksListNew = ewesUsers.getGroupLinksList();
+            List<DTONotification> notificationsListOld = persistentEwesUsers.getNotificationsList();
+            List<DTONotification> notificationsListNew = ewesUsers.getNotificationsList();
+            List<DTONotification> notificationsList1Old = persistentEwesUsers.getNotificationsList1();
+            List<DTONotification> notificationsList1New = ewesUsers.getNotificationsList1();
+            List<String> illegalOrphanMessages = null;
+            for (DTOUserLink userLinksListOldUserLinks : userLinksListOld) {
+                if (!userLinksListNew.contains(userLinksListOldUserLinks)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain UserLinks " + userLinksListOldUserLinks + " since its childId field is not nullable.");
+                }
+            }
+            for (DTOUserLink userLinksList1OldUserLinks : userLinksList1Old) {
+                if (!userLinksList1New.contains(userLinksList1OldUserLinks)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain UserLinks " + userLinksList1OldUserLinks + " since its masterId field is not nullable.");
+                }
+            }
+            for (DTOGroupLink groupLinksListOldGroupLinks : groupLinksListOld) {
+                if (!groupLinksListNew.contains(groupLinksListOldGroupLinks)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain GroupLinks " + groupLinksListOldGroupLinks + " since its userId field is not nullable.");
+                }
+            }
+            for (DTONotification notificationsListOldNotifications : notificationsListOld) {
+                if (!notificationsListNew.contains(notificationsListOldNotifications)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Notifications " + notificationsListOldNotifications + " since its recieverId field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<DTOAccessRule> attachedAclListNew = new ArrayList<DTOAccessRule>();
+            for (DTOAccessRule aclListNewAclToAttach : aclListNew) {
+                aclListNewAclToAttach = em.getReference(aclListNewAclToAttach.getClass(), aclListNewAclToAttach.getAclId());
+                attachedAclListNew.add(aclListNewAclToAttach);
+            }
+            aclListNew = attachedAclListNew;
+            ewesUsers.setAclList(aclListNew);
+            List<DTOAccessRule> attachedAclList1New = new ArrayList<DTOAccessRule>();
+            for (DTOAccessRule aclList1NewAclToAttach : aclList1New) {
+                aclList1NewAclToAttach = em.getReference(aclList1NewAclToAttach.getClass(), aclList1NewAclToAttach.getAclId());
+                attachedAclList1New.add(aclList1NewAclToAttach);
+            }
+            aclList1New = attachedAclList1New;
+            ewesUsers.setAclList1(aclList1New);
+            List<DTOUserLink> attachedUserLinksListNew = new ArrayList<DTOUserLink>();
+            for (DTOUserLink userLinksListNewUserLinksToAttach : userLinksListNew) {
+                userLinksListNewUserLinksToAttach = em.getReference(userLinksListNewUserLinksToAttach.getClass(), userLinksListNewUserLinksToAttach.getUserLinkId());
+                attachedUserLinksListNew.add(userLinksListNewUserLinksToAttach);
+            }
+            userLinksListNew = attachedUserLinksListNew;
+            ewesUsers.setUserLinksList(userLinksListNew);
+            List<DTOUserLink> attachedUserLinksList1New = new ArrayList<DTOUserLink>();
+            for (DTOUserLink userLinksList1NewUserLinksToAttach : userLinksList1New) {
+                userLinksList1NewUserLinksToAttach = em.getReference(userLinksList1NewUserLinksToAttach.getClass(), userLinksList1NewUserLinksToAttach.getUserLinkId());
+                attachedUserLinksList1New.add(userLinksList1NewUserLinksToAttach);
+            }
+            userLinksList1New = attachedUserLinksList1New;
+            ewesUsers.setUserLinksList1(userLinksList1New);
+            List<DTOSubject> attachedAssignedSubjectsListNew = new ArrayList<DTOSubject>();
+            for (DTOSubject assignedSubjectsListNewAssignedSubjectsToAttach : assignedSubjectsListNew) {
+                assignedSubjectsListNewAssignedSubjectsToAttach = em.getReference(assignedSubjectsListNewAssignedSubjectsToAttach.getClass(), assignedSubjectsListNewAssignedSubjectsToAttach.getAssignedSubjectId());
+                attachedAssignedSubjectsListNew.add(assignedSubjectsListNewAssignedSubjectsToAttach);
+            }
+            assignedSubjectsListNew = attachedAssignedSubjectsListNew;
+            ewesUsers.setAssignedSubjectsList(assignedSubjectsListNew);
+            List<DTOGroupLink> attachedGroupLinksListNew = new ArrayList<DTOGroupLink>();
+            for (DTOGroupLink groupLinksListNewGroupLinksToAttach : groupLinksListNew) {
+                groupLinksListNewGroupLinksToAttach = em.getReference(groupLinksListNewGroupLinksToAttach.getClass(), groupLinksListNewGroupLinksToAttach.getGroupLinkId());
+                attachedGroupLinksListNew.add(groupLinksListNewGroupLinksToAttach);
+            }
+            groupLinksListNew = attachedGroupLinksListNew;
+            ewesUsers.setGroupLinksList(groupLinksListNew);
+            List<DTONotification> attachedNotificationsListNew = new ArrayList<DTONotification>();
+            for (DTONotification notificationsListNewNotificationsToAttach : notificationsListNew) {
+                notificationsListNewNotificationsToAttach = em.getReference(notificationsListNewNotificationsToAttach.getClass(), notificationsListNewNotificationsToAttach.getNotificationId());
+                attachedNotificationsListNew.add(notificationsListNewNotificationsToAttach);
+            }
+            notificationsListNew = attachedNotificationsListNew;
+            ewesUsers.setNotificationsList(notificationsListNew);
+            List<DTONotification> attachedNotificationsList1New = new ArrayList<DTONotification>();
+            for (DTONotification notificationsList1NewNotificationsToAttach : notificationsList1New) {
+                notificationsList1NewNotificationsToAttach = em.getReference(notificationsList1NewNotificationsToAttach.getClass(), notificationsList1NewNotificationsToAttach.getNotificationId());
+                attachedNotificationsList1New.add(notificationsList1NewNotificationsToAttach);
+            }
+            notificationsList1New = attachedNotificationsList1New;
+            ewesUsers.setNotificationsList1(notificationsList1New);
+            ewesUsers = em.merge(ewesUsers);
+            for (DTOAccessRule aclListOldAcl : aclListOld) {
+                if (!aclListNew.contains(aclListOldAcl)) {
+                    aclListOldAcl.setCreatorId(null);
+                    aclListOldAcl = em.merge(aclListOldAcl);
+                }
+            }
+            for (DTOAccessRule aclListNewAcl : aclListNew) {
+                if (!aclListOld.contains(aclListNewAcl)) {
+                    DTOUser oldCreatorIdOfAclListNewAcl = aclListNewAcl.getCreatorId();
+                    aclListNewAcl.setCreatorId(ewesUsers);
+                    aclListNewAcl = em.merge(aclListNewAcl);
+                    if (oldCreatorIdOfAclListNewAcl != null && !oldCreatorIdOfAclListNewAcl.equals(ewesUsers)) {
+                        oldCreatorIdOfAclListNewAcl.getAclList().remove(aclListNewAcl);
+                        oldCreatorIdOfAclListNewAcl = em.merge(oldCreatorIdOfAclListNewAcl);
+                    }
+                }
+            }
+            for (DTOAccessRule aclList1OldAcl : aclList1Old) {
+                if (!aclList1New.contains(aclList1OldAcl)) {
+                    aclList1OldAcl.setUserId(null);
+                    aclList1OldAcl = em.merge(aclList1OldAcl);
+                }
+            }
+            for (DTOAccessRule aclList1NewAcl : aclList1New) {
+                if (!aclList1Old.contains(aclList1NewAcl)) {
+                    DTOUser oldUserIdOfAclList1NewAcl = aclList1NewAcl.getUserId();
+                    aclList1NewAcl.setUserId(ewesUsers);
+                    aclList1NewAcl = em.merge(aclList1NewAcl);
+                    if (oldUserIdOfAclList1NewAcl != null && !oldUserIdOfAclList1NewAcl.equals(ewesUsers)) {
+                        oldUserIdOfAclList1NewAcl.getAclList1().remove(aclList1NewAcl);
+                        oldUserIdOfAclList1NewAcl = em.merge(oldUserIdOfAclList1NewAcl);
+                    }
+                }
+            }
+            for (DTOUserLink userLinksListNewUserLinks : userLinksListNew) {
+                if (!userLinksListOld.contains(userLinksListNewUserLinks)) {
+                    DTOUser oldChildIdOfUserLinksListNewUserLinks = userLinksListNewUserLinks.getChildId();
+                    userLinksListNewUserLinks.setChildId(ewesUsers);
+                    userLinksListNewUserLinks = em.merge(userLinksListNewUserLinks);
+                    if (oldChildIdOfUserLinksListNewUserLinks != null && !oldChildIdOfUserLinksListNewUserLinks.equals(ewesUsers)) {
+                        oldChildIdOfUserLinksListNewUserLinks.getUserLinksList().remove(userLinksListNewUserLinks);
+                        oldChildIdOfUserLinksListNewUserLinks = em.merge(oldChildIdOfUserLinksListNewUserLinks);
+                    }
+                }
+            }
+            for (DTOUserLink userLinksList1NewUserLinks : userLinksList1New) {
+                if (!userLinksList1Old.contains(userLinksList1NewUserLinks)) {
+                    DTOUser oldMasterIdOfUserLinksList1NewUserLinks = userLinksList1NewUserLinks.getMasterId();
+                    userLinksList1NewUserLinks.setMasterId(ewesUsers);
+                    userLinksList1NewUserLinks = em.merge(userLinksList1NewUserLinks);
+                    if (oldMasterIdOfUserLinksList1NewUserLinks != null && !oldMasterIdOfUserLinksList1NewUserLinks.equals(ewesUsers)) {
+                        oldMasterIdOfUserLinksList1NewUserLinks.getUserLinksList1().remove(userLinksList1NewUserLinks);
+                        oldMasterIdOfUserLinksList1NewUserLinks = em.merge(oldMasterIdOfUserLinksList1NewUserLinks);
+                    }
+                }
+            }
+            for (DTOSubject assignedSubjectsListOldAssignedSubjects : assignedSubjectsListOld) {
+                if (!assignedSubjectsListNew.contains(assignedSubjectsListOldAssignedSubjects)) {
+                    assignedSubjectsListOldAssignedSubjects.setTeacherId(null);
+                    assignedSubjectsListOldAssignedSubjects = em.merge(assignedSubjectsListOldAssignedSubjects);
+                }
+            }
+            for (DTOSubject assignedSubjectsListNewAssignedSubjects : assignedSubjectsListNew) {
+                if (!assignedSubjectsListOld.contains(assignedSubjectsListNewAssignedSubjects)) {
+                    DTOUser oldTeacherIdOfAssignedSubjectsListNewAssignedSubjects = assignedSubjectsListNewAssignedSubjects.getTeacherId();
+                    assignedSubjectsListNewAssignedSubjects.setTeacherId(ewesUsers);
+                    assignedSubjectsListNewAssignedSubjects = em.merge(assignedSubjectsListNewAssignedSubjects);
+                    if (oldTeacherIdOfAssignedSubjectsListNewAssignedSubjects != null && !oldTeacherIdOfAssignedSubjectsListNewAssignedSubjects.equals(ewesUsers)) {
+                        oldTeacherIdOfAssignedSubjectsListNewAssignedSubjects.getAssignedSubjectsList().remove(assignedSubjectsListNewAssignedSubjects);
+                        oldTeacherIdOfAssignedSubjectsListNewAssignedSubjects = em.merge(oldTeacherIdOfAssignedSubjectsListNewAssignedSubjects);
+                    }
+                }
+            }
+            for (DTOGroupLink groupLinksListNewGroupLinks : groupLinksListNew) {
+                if (!groupLinksListOld.contains(groupLinksListNewGroupLinks)) {
+                    DTOUser oldUserIdOfGroupLinksListNewGroupLinks = groupLinksListNewGroupLinks.getUserId();
+                    groupLinksListNewGroupLinks.setUserId(ewesUsers);
+                    groupLinksListNewGroupLinks = em.merge(groupLinksListNewGroupLinks);
+                    if (oldUserIdOfGroupLinksListNewGroupLinks != null && !oldUserIdOfGroupLinksListNewGroupLinks.equals(ewesUsers)) {
+                        oldUserIdOfGroupLinksListNewGroupLinks.getGroupLinksList().remove(groupLinksListNewGroupLinks);
+                        oldUserIdOfGroupLinksListNewGroupLinks = em.merge(oldUserIdOfGroupLinksListNewGroupLinks);
+                    }
+                }
+            }
+            for (DTONotification notificationsListNewNotifications : notificationsListNew) {
+                if (!notificationsListOld.contains(notificationsListNewNotifications)) {
+                    DTOUser oldRecieverIdOfNotificationsListNewNotifications = notificationsListNewNotifications.getRecieverId();
+                    notificationsListNewNotifications.setRecieverId(ewesUsers);
+                    notificationsListNewNotifications = em.merge(notificationsListNewNotifications);
+                    if (oldRecieverIdOfNotificationsListNewNotifications != null && !oldRecieverIdOfNotificationsListNewNotifications.equals(ewesUsers)) {
+                        oldRecieverIdOfNotificationsListNewNotifications.getNotificationsList().remove(notificationsListNewNotifications);
+                        oldRecieverIdOfNotificationsListNewNotifications = em.merge(oldRecieverIdOfNotificationsListNewNotifications);
+                    }
+                }
+            }
+            for (DTONotification notificationsList1OldNotifications : notificationsList1Old) {
+                if (!notificationsList1New.contains(notificationsList1OldNotifications)) {
+                    notificationsList1OldNotifications.setSenderId(null);
+                    notificationsList1OldNotifications = em.merge(notificationsList1OldNotifications);
+                }
+            }
+            for (DTONotification notificationsList1NewNotifications : notificationsList1New) {
+                if (!notificationsList1Old.contains(notificationsList1NewNotifications)) {
+                    DTOUser oldSenderIdOfNotificationsList1NewNotifications = notificationsList1NewNotifications.getSenderId();
+                    notificationsList1NewNotifications.setSenderId(ewesUsers);
+                    notificationsList1NewNotifications = em.merge(notificationsList1NewNotifications);
+                    if (oldSenderIdOfNotificationsList1NewNotifications != null && !oldSenderIdOfNotificationsList1NewNotifications.equals(ewesUsers)) {
+                        oldSenderIdOfNotificationsList1NewNotifications.getNotificationsList1().remove(notificationsList1NewNotifications);
+                        oldSenderIdOfNotificationsList1NewNotifications = em.merge(oldSenderIdOfNotificationsList1NewNotifications);
+                    }
+                }
+            }
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = ewesUsers.getUserId();
+                if (findEwesUsers(id) == null) {
+                    throw new NonexistentEntityException("The ewesUsers with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        try {
+            utx.begin();
+            em = getEntityManager();
+            DTOUser ewesUsers;
+            try {
+                ewesUsers = em.getReference(DTOUser.class, id);
+                ewesUsers.getUserId();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The ewesUsers with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<DTOUserLink> userLinksListOrphanCheck = ewesUsers.getUserLinksList();
+            for (DTOUserLink userLinksListOrphanCheckUserLinks : userLinksListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This EwesUsers (" + ewesUsers + ") cannot be destroyed since the UserLinks " + userLinksListOrphanCheckUserLinks + " in its userLinksList field has a non-nullable childId field.");
+            }
+            List<DTOUserLink> userLinksList1OrphanCheck = ewesUsers.getUserLinksList1();
+            for (DTOUserLink userLinksList1OrphanCheckUserLinks : userLinksList1OrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This EwesUsers (" + ewesUsers + ") cannot be destroyed since the UserLinks " + userLinksList1OrphanCheckUserLinks + " in its userLinksList1 field has a non-nullable masterId field.");
+            }
+            List<DTOGroupLink> groupLinksListOrphanCheck = ewesUsers.getGroupLinksList();
+            for (DTOGroupLink groupLinksListOrphanCheckGroupLinks : groupLinksListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This EwesUsers (" + ewesUsers + ") cannot be destroyed since the GroupLinks " + groupLinksListOrphanCheckGroupLinks + " in its groupLinksList field has a non-nullable userId field.");
+            }
+            List<DTONotification> notificationsListOrphanCheck = ewesUsers.getNotificationsList();
+            for (DTONotification notificationsListOrphanCheckNotifications : notificationsListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This EwesUsers (" + ewesUsers + ") cannot be destroyed since the Notifications " + notificationsListOrphanCheckNotifications + " in its notificationsList field has a non-nullable recieverId field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<DTOAccessRule> aclList = ewesUsers.getAclList();
+            for (DTOAccessRule aclListAcl : aclList) {
+                aclListAcl.setCreatorId(null);
+                aclListAcl = em.merge(aclListAcl);
+            }
+            List<DTOAccessRule> aclList1 = ewesUsers.getAclList1();
+            for (DTOAccessRule aclList1Acl : aclList1) {
+                aclList1Acl.setUserId(null);
+                aclList1Acl = em.merge(aclList1Acl);
+            }
+            List<DTOSubject> assignedSubjectsList = ewesUsers.getAssignedSubjectsList();
+            for (DTOSubject assignedSubjectsListAssignedSubjects : assignedSubjectsList) {
+                assignedSubjectsListAssignedSubjects.setTeacherId(null);
+                assignedSubjectsListAssignedSubjects = em.merge(assignedSubjectsListAssignedSubjects);
+            }
+            List<DTONotification> notificationsList1 = ewesUsers.getNotificationsList1();
+            for (DTONotification notificationsList1Notifications : notificationsList1) {
+                notificationsList1Notifications.setSenderId(null);
+                notificationsList1Notifications = em.merge(notificationsList1Notifications);
+            }
+            em.remove(ewesUsers);
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public List<DTOUser> findEwesUsersEntities() {
+        return findEwesUsersEntities(true, -1, -1);
+    }
+
+    public List<DTOUser> findEwesUsersEntities(int maxResults, int firstResult) {
+        return findEwesUsersEntities(false, maxResults, firstResult);
+    }
+
+    private List<DTOUser> findEwesUsersEntities(boolean all, int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(DTOUser.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public DTOUser findEwesUsers(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(DTOUser.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getEwesUsersCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<DTOUser> rt = cq.from(DTOUser.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+}

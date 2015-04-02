@@ -1,0 +1,21 @@
+<ui:composition template="/WEB-INF/templates/admin.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:my="http://java.sun.com/jsf/composite/components">
+	<ui:define name="content">
+		<h:form>
+			<rich:tree id="tree" nodeType="#{node.type}" var="node"
+				value="#{treeBean.rootNodes}" toggleType="client"
+				selectionType="ajax"
+				selectionChangeListener="#{treeBean.selectionChanged}">
+				<rich:treeNode type="group">#{node.name}</rich:treeNode>
+				<rich:treeNode type="user" iconExpanded="/images/tree/disc.gif" iconCollapsed="/images/tree/disc.gif">#{node.name}</rich:treeNode>
+				<rich:treeNode type="user" iconLeaf="/images/tree/song.gif">#{node.artist} - #{node.name} - #{node.year}</rich:treeNode>
+			</rich:tree>
+		</h:form>
+	</ui:define>
+</ui:composition>

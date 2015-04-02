@@ -1,0 +1,15 @@
+package ee.iati.ewes.dto.converters;
+
+import java.io.Serializable;
+import java.lang.reflect.Field;
+
+import ee.iati.ewes.utils.DTOBase;
+
+public class EntotyDTOConverter<T extends DTOBase> {
+	public T entityToDTO(Class<T> clazz, Serializable entity)
+	{
+		Field[] fields = clazz.getFields();
+		fields[0].
+		return null;
+	}
+}

@@ -1,0 +1,157 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+/**
+ *
+ * @author Artur
+ */
+@Entity
+@Table(name = "notifications")
+@NamedQueries({
+		@NamedQuery(name = "DTONotification.findAll", query = "SELECT n FROM DTONotification n"),
+		@NamedQuery(name = "DTONotification.findByNotificationId", query = "SELECT n FROM DTONotification n WHERE n.notificationId = :notificationId"),
+		@NamedQuery(name = "DTONotification.findByTitle", query = "SELECT n FROM DTONotification n WHERE n.title = :title"),
+		@NamedQuery(name = "DTONotification.findByContent", query = "SELECT n FROM DTONotification n WHERE n.content = :content"),
+		@NamedQuery(name = "DTONotification.findByCreationDate", query = "SELECT n FROM DTONotification n WHERE n.creationDate = :creationDate") })
+public class DTONotification implements Serializable {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "NOTIFICATION_ID")
+	private Integer notificationId;
+	@Basic(optional = false)
+	@NotNull
+	@Size(min = 1, max = 128)
+	@Column(name = "TITLE")
+	private String title;
+	@Size(max = 512)
+	@Column(name = "CONTENT")
+	private String content;
+	@Basic(optional = false)
+	@NotNull
+	@Column(name = "CREATION_DATE")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date creationDate;
+	@JoinColumn(name = "RECIEVER_ID", referencedColumnName = "USER_ID")
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	private DTOUser recieverId;
+	@JoinColumn(name = "SENDER_ID", referencedColumnName = "USER_ID")
+	@ManyToOne(fetch = FetchType.EAGER)
+	private DTOUser senderId;
+
+	public DTONotification() {
+	}
+
+	public DTONotification(Integer notificationId) {
+		this.notificationId = notificationId;
+	}
+
+	public DTONotification(Integer notificationId, String title,
+			Date creationDate) {
+		this.notificationId = notificationId;
+		this.title = title;
+		this.creationDate = creationDate;
+	}
+
+	public Integer getNotificationId() {
+		return notificationId;
+	}
+
+	public void setNotificationId(Integer notificationId) {
+		this.notificationId = notificationId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public DTOUser getRecieverId() {
+		return recieverId;
+	}
+
+	public void setRecieverId(DTOUser recieverId) {
+		this.recieverId = recieverId;
+	}
+
+	public DTOUser getSenderId() {
+		return senderId;
+	}
+
+	public void setSenderId(DTOUser senderId) {
+		this.senderId = senderId;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (notificationId != null ? notificationId.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof DTONotification)) {
+			return false;
+		}
+		DTONotification other = (DTONotification) object;
+		if ((this.notificationId == null && other.notificationId != null)
+				|| (this.notificationId != null && !this.notificationId
+						.equals(other.notificationId))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ee.iati.ewes.dto.Notifications[ notificationId="
+				+ notificationId + " ]";
+	}
+
+}

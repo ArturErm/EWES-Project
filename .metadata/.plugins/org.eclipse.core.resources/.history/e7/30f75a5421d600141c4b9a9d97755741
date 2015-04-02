@@ -1,0 +1,5 @@
+package ee.iati.ewes.dto.converters;
+
+public class EntotyDTOConverter {
+
+}

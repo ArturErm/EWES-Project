@@ -1,0 +1,45 @@
+package ee.iati.ewes.web.beans;
+
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import ee.iati.ewes.dto.DTOUser;
+
+@ManagedBean
+@ViewScoped
+public class UserBean implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Inject protected Logger log;
+	
+	private DTOUser user;
+
+	@Named public DTOUser getUser() { return user; }
+	public void setUser(DTOUser user) { this.user = user; }
+	
+	@PostConstruct
+	public void init()
+	{
+		user = new DTOUser();
+		log.log(Level.INFO, "UserBean initialized");
+	}
+	
+	@PreDestroy
+	public void cleanUp()
+	{
+		log.log(Level.INFO, "UserBean Destroyed");
+	}
+	
+	public void createUser()
+	{
+		log.log(Level.INFO, user.toString());
+	}
+}

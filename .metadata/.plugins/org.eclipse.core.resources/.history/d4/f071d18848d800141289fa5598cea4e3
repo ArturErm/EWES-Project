@@ -1,0 +1,92 @@
+package ee.iati.ewes.web.controller;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.enterprise.event.Event;
+import javax.enterprise.inject.Model;
+import javax.enterprise.inject.Produces;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import ee.iati.ewes.dto.DTOUser;
+import ee.iati.ewes.ejb.ManagementBean;
+
+import org.richfaces.cdi.push.Push;
+
+@Model
+public class MemberController {
+
+	@EJB private ManagementBean mgtSvc;
+	
+	public static final String PUSH_CDI_TOPIC = "pushCdi";
+
+	@Inject
+	private FacesContext facesContext;
+	
+	@Inject
+	@Push(topic = PUSH_CDI_TOPIC)
+	Event<String> pushEvent;
+
+	private DTOUser newMember;
+	private DTOUser member;
+
+	@Produces
+	@Named
+	public DTOUser getNewMember() {
+		return newMember;
+	}
+
+	@Produces
+	@Named
+	public DTOUser getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+	@PostConstruct
+	public void initNewMember() {
+		newMember = new Member();
+	}
+
+	public void register() throws Exception {
+		try {
+			memberRegistration.register(newMember);
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Registered!", "Registration successful");
+			facesContext.addMessage(null, m);
+			pushEvent.fire(String.format("New member added: %s (id: %d)",
+					newMember.getName(), newMember.getId()));
+			initNewMember();
+		} catch (Exception e) {
+			String errorMessage = getRootErrorMessage(e);
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					errorMessage, "Registration unsuccessful");
+			facesContext.addMessage(null, m);
+		}
+	}
+
+	private String getRootErrorMessage(Exception e) {
+		// Default to general error message that registration failed.
+		String errorMessage = "Registration failed. See server log for more information";
+		if (e == null) {
+			// This shouldn't happen, but return the default messages
+			return errorMessage;
+		}
+
+		// Start with the exception and recurse to find the root cause
+		Throwable t = e;
+		while (t != null) {
+			// Get the message from the Throwable class instance
+			errorMessage = t.getLocalizedMessage();
+			t = t.getCause();
+		}
+		// This is the root cause message
+		return errorMessage;
+	}
+
+}

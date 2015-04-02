@@ -1,0 +1,14 @@
+package ee.iati.ewes.dto;
+
+import javax.annotation.Generated;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+
+@Generated(value="Dali", date="2015-03-29T14:57:27.130+0300")
+@StaticMetamodel(DTOSubject.class)
+public class DTOSubject_ {
+	public static volatile SingularAttribute<DTOSubject, Integer> assignedSubjectId;
+	public static volatile SingularAttribute<DTOSubject, DTOGroup> groupId;
+	public static volatile SingularAttribute<DTOSubject, DTOSubjectDescription> subjectId;
+	public static volatile SingularAttribute<DTOSubject, DTOUser> teacherId;
+}

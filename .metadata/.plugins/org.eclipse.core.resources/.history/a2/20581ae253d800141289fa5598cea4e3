@@ -1,0 +1,8 @@
+package ee.iati.ewes.web.controller.tree;
+
+import javax.swing.tree.TreeNode;
+
+public class GroupNode extends NamedNode implements TreeNode {
+	private static final long serialVersionUID = 1L;
+
+}

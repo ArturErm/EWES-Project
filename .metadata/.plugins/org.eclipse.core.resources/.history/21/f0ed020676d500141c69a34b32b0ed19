@@ -1,0 +1,13 @@
+package ee.iati.ewes.utils;
+
+public abstract class DTOBase implements Serealizeble{       
+    public static boolean isId(Integer id) {
+        return (id != null && id > 0);
+    }
+   
+    public boolean hasId() {
+        return isId(getId());
+    }
+
+    public abstract Integer getId();
+}

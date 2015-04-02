@@ -1,0 +1,5 @@
+package ee.iati.ewes.web.beans;
+
+public class MainController {
+
+}

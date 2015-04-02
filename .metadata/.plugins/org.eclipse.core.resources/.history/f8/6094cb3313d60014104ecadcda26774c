@@ -1,0 +1,113 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.dto;
+
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+/**
+ *
+ * @author Artur
+ */
+@Entity
+@Table(name = "user_links")
+@NamedQueries({
+		@NamedQuery(name = "DTOUserLink.findAll", query = "SELECT u FROM DTOUserLink u"),
+		@NamedQuery(name = "DTOUserLink.findByUserLinkId", query = "SELECT u FROM DTOUserLink u WHERE u.userLinkId = :userLinkId") })
+public class DTOUserLink implements Serializable {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "USER_LINK_ID")
+	private Integer userLinkId;
+	@JoinColumn(name = "CHILD_ID", referencedColumnName = "USER_ID")
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	private DTOUser childId;
+	@JoinColumn(name = "LINK_TYPE_ID", referencedColumnName = "LINK_TYPE_ID")
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	private DTOLinkType linkTypeId;
+	@JoinColumn(name = "MASTER_ID", referencedColumnName = "USER_ID")
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	private DTOUser masterId;
+
+	public DTOUserLink() {
+	}
+
+	public DTOUserLink(Integer userLinkId) {
+		this.userLinkId = userLinkId;
+	}
+
+	public Integer getUserLinkId() {
+		return userLinkId;
+	}
+
+	public void setUserLinkId(Integer userLinkId) {
+		this.userLinkId = userLinkId;
+	}
+
+	public DTOUser getChildId() {
+		return childId;
+	}
+
+	public void setChildId(DTOUser childId) {
+		this.childId = childId;
+	}
+
+	public DTOLinkType getLinkTypeId() {
+		return linkTypeId;
+	}
+
+	public void setLinkTypeId(DTOLinkType linkTypeId) {
+		this.linkTypeId = linkTypeId;
+	}
+
+	public DTOUser getMasterId() {
+		return masterId;
+	}
+
+	public void setMasterId(DTOUser masterId) {
+		this.masterId = masterId;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (userLinkId != null ? userLinkId.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (!(object instanceof DTOUserLink)) {
+			return false;
+		}
+		DTOUserLink other = (DTOUserLink) object;
+		if ((this.userLinkId == null && other.userLinkId != null)
+				|| (this.userLinkId != null && !this.userLinkId
+						.equals(other.userLinkId))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ee.iati.ewes.dto.UserLinks[ userLinkId=" + userLinkId + " ]";
+	}
+
+}

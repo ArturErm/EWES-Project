@@ -1,0 +1,113 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ee.iati.ewes.entity;
+
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+/**
+ *
+ * @author Artur
+ */
+@Entity
+@Table(name = "user_links")
+@NamedQueries({
+		@NamedQuery(name = "EntityUserLink.findAll", query = "SELECT u FROM EntityUserLink u"),
+		@NamedQuery(name = "EntityUserLink.findByUserLinkId", query = "SELECT u FROM EntityUserLink u WHERE u.userLinkId = :userLinkId") })
+public class EntityUserLink implements Serializable {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "USER_LINK_ID")
+	private Integer userLinkId;
+	@JoinColumn(name = "CHILD_ID", referencedColumnName = "USER_ID")
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	private EntityUser childId;
+	@JoinColumn(name = "LINK_TYPE_ID", referencedColumnName = "LINK_TYPE_ID")
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	private EntityLinkType linkTypeId;
+	@JoinColumn(name = "MASTER_ID", referencedColumnName = "USER_ID")
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	private EntityUser masterId;
+
+	public EntityUserLink() {
+	}
+
+	public EntityUserLink(Integer userLinkId) {
+		this.userLinkId = userLinkId;
+	}
+
+	public Integer getUserLinkId() {
+		return userLinkId;
+	}
+
+	public void setUserLinkId(Integer userLinkId) {
+		this.userLinkId = userLinkId;
+	}
+
+	public EntityUser getChildId() {
+		return childId;
+	}
+
+	public void setChildId(EntityUser childId) {
+		this.childId = childId;
+	}
+
+	public EntityLinkType getLinkTypeId() {
+		return linkTypeId;
+	}
+
+	public void setLinkTypeId(EntityLinkType linkTypeId) {
+		this.linkTypeId = linkTypeId;
+	}
+
+	public EntityUser getMasterId() {
+		return masterId;
+	}
+
+	public void setMasterId(EntityUser masterId) {
+		this.masterId = masterId;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (userLinkId != null ? userLinkId.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (!(object instanceof EntityUserLink)) {
+			return false;
+		}
+		EntityUserLink other = (EntityUserLink) object;
+		if ((this.userLinkId == null && other.userLinkId != null)
+				|| (this.userLinkId != null && !this.userLinkId
+						.equals(other.userLinkId))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ee.iati.ewes.dto.UserLinks[ userLinkId=" + userLinkId + " ]";
+	}
+
+}
